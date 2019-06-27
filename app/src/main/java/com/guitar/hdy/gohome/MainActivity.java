@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.skt.Tmap.TMapView;
 
-//commit test
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
