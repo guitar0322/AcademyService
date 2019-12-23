@@ -1,10 +1,9 @@
-package guitar.academyservice;
+package guitar.parent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.OnLifecycleEvent;
-import guitar.academyservice.ui.login.LoginActivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -25,15 +24,18 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Academy> academyList;
-    ArrayList<String> academyNameList;
-    Academy selectedAcademy;
+    ArrayList<Student> studentList;
+    ArrayList<String> studentNameList;
+    Student selectedStudent;
     private static final int GPS_ENABLE_REQUEST_CODE = 2000;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     ContentValues data;
@@ -52,25 +54,25 @@ public class MainActivity extends AppCompatActivity {
         else{
             checkGPSPermission();
         }
-        ListView academyListView = findViewById(R.id.academyList);
+        ListView studentListView = findViewById(R.id.studentList);
         Intent intent = getIntent();
         username = getSharedPreferences("UserInfo", MODE_PRIVATE).getString("username", "");
-        if(academyList == null){
-            Log.d("main_test", "academyList is null");
-            academyList = (ArrayList<Academy>)intent.getSerializableExtra("Academy");
-            initAcademyList();
+        if(studentList == null){
+            Log.d("main_test", "studentList is null");
+            studentList = (ArrayList<Student>)intent.getSerializableExtra("student");
+            initStudentList();
         }
         data = new ContentValues();
 
 
-        ListAdapter academyAdapter = new ListAdapter(this, academyNameList);
+        ListAdapter studentAdapter = new ListAdapter(this, studentNameList);
 
-        academyListView.setAdapter(academyAdapter);
-        academyListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        studentListView.setAdapter(studentAdapter);
+        studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView parent, View v, int position, long id){
-                selectedAcademy = academyList.get(position);
+                selectedStudent = studentList.get(position);
                 data.put("username", username);
-                data.put("academy", academyList.get(position).name);
+                data.put("student", studentList.get(position).name);
                 RequestCourseList requestCourseList = new RequestCourseList(mainURL, data);
                 requestCourseList.execute();
             }
@@ -104,11 +106,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            parseCourseList(o.toString());
-            Log.d("main_test", "selected academy's courselist size = " + selectedAcademy.courseList.size());
+            parseCourseInfo(o.toString());
             progressBar.setVisibility(View.GONE);
-            Intent intent = new Intent(MainActivity.this, AcademyActivity.class);
-            intent.putExtra("academy", selectedAcademy);
+            Intent intent = new Intent(MainActivity.this, DriveActivity.class);
+            intent.putExtra("student", selectedStudent);
             startActivity(intent);
 
             //Todo after httpNetworking.
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed(){
         Intent intent = new Intent(this, ChoicePopupActivity.class);
         intent.putExtra("guide", "앱을 종료하시겠습니까?");
-        intent.putExtra("code", PopupManager.APP_QUIT_CODE);
+        intent.putExtra("code", ChoicePopupActivity.APP_QUIT_CODE);
         startActivity(intent);
     }
 
@@ -197,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case GPS_ENABLE_REQUEST_CODE:
                 if (checkLocationServicesStatus()) {
-                        Log.d("checkGPSEnable", "onActivityResult : GPS 활성화 되있음");
-                        checkGPSPermission();
-                        return;
+                    Log.d("checkGPSEnable", "onActivityResult : GPS 활성화 되있음");
+                    checkGPSPermission();
+                    return;
                 }
                 else{
                     Log.d("checkGPSEnable", "GPS 비활성화 되있음");
@@ -207,20 +208,22 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-    public void parseCourseList(String result){
-        Log.d("main_test", "selected academy name = " + selectedAcademy.name);
-        selectedAcademy.courseList = new ArrayList<Course>();
-        selectedAcademy.courseList.add(new Course("동작구 일대", new ArrayList<Point>()));
-        selectedAcademy.courseList.add(new Course("상도동 일대", new ArrayList<Point>()));
-        selectedAcademy.courseList.add(new Course("남성동 일대", new ArrayList<Point>()));
-        selectedAcademy.courseList.add(new Course("이수동 일대", new ArrayList<Point>()));
-        //Todo
+    public void parseCourseInfo(String result){
+        Log.d("main_test", "selected academy name = " + selectedStudent.name);
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+            selectedStudent.arriveTime = simpleDateFormat.parse("2019-12-23 15:53:10");
+            selectedStudent.status = 1;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         //Setting to courseList of academy Object using result of networking.
     }
-    public void initAcademyList(){
-        academyNameList = new ArrayList<>();
-        for(int i = 0; i < academyList.size(); i++){
-            academyNameList.add(academyList.get(i).name);
+    public void initStudentList(){
+        studentNameList = new ArrayList<>();
+        for(int i = 0; i < studentList.size(); i++){
+            studentNameList.add(studentList.get(i).name);
         }
     }
 }

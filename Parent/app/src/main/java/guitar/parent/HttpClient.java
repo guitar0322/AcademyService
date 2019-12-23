@@ -1,26 +1,17 @@
-package guitar.academyservice;
+package guitar.parent;
+
 import android.content.ContentValues;
-import android.os.AsyncTask;
-import android.util.JsonReader;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.lang.String;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-public class HttpClient    {
+public class HttpClient {
     public String request(String _url, ContentValues params){
         HttpURLConnection urlConn = null;
         StringBuffer sbParams = new StringBuffer();

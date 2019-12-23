@@ -1,6 +1,5 @@
-package guitar.academyservice.ui.login;
+package guitar.parent;
 
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -10,14 +9,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.skt.Tmap.TMapView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,20 +22,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import guitar.academyservice.Academy;
-import guitar.academyservice.Course;
-import guitar.academyservice.HttpClient;
-import guitar.academyservice.MainActivity;
-import guitar.academyservice.R;
 
 public class LoginActivity extends AppCompatActivity {
     String loginUrl;
     String username;
     String password;
-    ArrayList<Academy> academyList;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     ProgressBar progressBar;
+    ArrayList<Student> studentList;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,11 +98,11 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             Log.d("login_test", "login success");
-            initAcademyList(o.toString());
+            initStudentList(o.toString());
             insertUserInfo(username);
             progressBar.setVisibility(View.GONE);
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("Academy", academyList);
+            intent.putExtra("student", studentList);
             startActivity(intent);
             finish();
             //Todo after httpNetworking.
@@ -118,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void initAcademyList(String result){
+    public void initStudentList(String result){
         Log.d("login_test", "login result = " + result);
         try{
             JSONObject jsonObject = new JSONObject(result);
@@ -131,9 +123,9 @@ public class LoginActivity extends AppCompatActivity {
         catch(JSONException e){
             e.printStackTrace();
         }
-        academyList = new ArrayList<>();
-        academyList.add(new Academy("동작 영어학원2", new ArrayList<Course>()));
-        academyList.add(new Academy("상도 수학학원2", new ArrayList<Course>()));
-        academyList.add(new Academy("상도 논술학원2", new ArrayList<Course>()));
+        studentList = new ArrayList<>();
+        studentList.add(new Student("김동현", "이기사", "01011111111", "수학학원", "01044444444"));
+        studentList.add(new Student("김동현", "김기사", "01022222222", "영어학원", "01055555555"));
+        studentList.add(new Student("김동찬", "최기사", "01033333333", "수학학원", "01066666666"));
     }
 }
