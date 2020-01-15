@@ -2,6 +2,7 @@ package guitar.parent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 public class ChoicePopupActivity extends Activity {
     public static final int APP_QUIT_CODE = 1;
+    public static final int QUIT_DRIVE = 2;
+    public static final int LOGOUT = 3;
     TextView guideText;
     Button closeButton;
     Button okButton;
@@ -26,17 +29,14 @@ public class ChoicePopupActivity extends Activity {
 
         Intent intent = getIntent();
         String data = intent.getStringExtra("guide");
-        REQUESTCODE = intent.getIntExtra("code", 0);
+        REQUESTCODE = 0;
         guideText.setText(data);
 
         okButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v){
-                switch (REQUESTCODE){
-                    case APP_QUIT_CODE:
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        break;
-                }
+                setResult(RESULT_OK);
+                finish();
             }
         });
 

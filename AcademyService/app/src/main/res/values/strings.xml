@@ -12,6 +12,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="url">http://10.27.6.183:8080/</string>
+    <string name="accessibility_description">접근성 권한을 필요로 합니다.</string>
+    <string name="url">http://10.27.6.3:8080/</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

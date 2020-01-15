@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AcademyService</string>
+    <string name="app_name">Parent</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">이메일주소</string>
     <string name="prompt_password">영어+숫자 8~16자</string>

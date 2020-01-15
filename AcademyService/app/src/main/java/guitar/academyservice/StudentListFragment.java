@@ -18,11 +18,14 @@ import android.widget.ListView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class StudentListFragment extends Fragment {
+    private static final int CHECK_POINT_CODE = 1;
     ArrayList<String> studentList;
     int index;
     DriveActivity activity;
@@ -45,14 +48,13 @@ public class StudentListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_student_list, container, false);
+
         ListAdapter listAdapter = new ListAdapter(activity, studentList);
-
         ListView pointListView = rootView.findViewById(R.id.studentList);
-
         pointListView.setAdapter(listAdapter);
 
         Button backButton = rootView.findViewById(R.id.backButton);
@@ -68,15 +70,16 @@ public class StudentListFragment extends Fragment {
         checkButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(index != 0) {
-                    if (activity.pointList.get(index - 1).check == true) {
-                        activity.pointList.get(index).check = true;
-                    } else{
-                        activity.pointCheckError();
-                    }
+                if(activity.pointList.get(index).check == true){
+                    Intent intent1 = new Intent(activity, PopupActivity.class);
+                    intent1.putExtra("guide", "이미 체크된 경유지입니다");
+                    startActivity(intent1);
+                    return;
                 }
                 else{
-                    activity.pointList.get(index).check = true;
+                    Intent intent = new Intent(activity, ChoicePopupActivity.class);
+                    intent.putExtra("guide", "경유지 체크를 하시겠습니까?");
+                    startActivityForResult(intent, CHECK_POINT_CODE);
                 }
             }
         });
@@ -89,4 +92,24 @@ public class StudentListFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case CHECK_POINT_CODE:
+                if(resultCode == RESULT_OK){
+                    Log.d("_test", "result_ok");
+                    if(index == 0){
+                        activity.requestCheckPoint(index);
+                    }
+                    else if (activity.pointList.get(index - 1).check == true) {
+                        activity.requestCheckPoint(index);
+                    }
+                    else{
+                        activity.pointCheckError();
+                    }
+                }
+                break;
+        }
+    }
 }

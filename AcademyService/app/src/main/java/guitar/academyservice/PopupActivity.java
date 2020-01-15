@@ -5,16 +5,16 @@ import guitar.academyservice.ui.login.LoginActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.prefs.Preferences;
+
 public class PopupActivity extends Activity {
-    public static final int BASIC = 0;
-    public static final int SIGNUP_POPUP = 1;
-    public static final int END_DRIVE=2;
     TextView guideTextView;
     Button closeButton;
     int POPUP_CODE;
@@ -30,52 +30,17 @@ public class PopupActivity extends Activity {
 
         Intent intent = getIntent();
         guideText = intent.getStringExtra("guide");
-        POPUP_CODE = intent.getIntExtra("code", BASIC);
-        setButtonClickListener();
-    }
-
-    public void setButtonClickListener(){
-        View.OnClickListener signupClickListener = new View.OnClickListener() {
+        guideTextView.setText(guideText);
+        closeButton.setOnClickListener(new Button.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PopupActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        };
-
-        View.OnClickListener endDriveClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PopupActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        };
-
-        View.OnClickListener basicClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(View view){
                 finish();
             }
-        };
-
-        switch(POPUP_CODE){
-            case SIGNUP_POPUP:
-                closeButton.setOnClickListener(signupClickListener);
-                guideTextView.setText("회원가입 성공");
-                break;
-            case BASIC:
-                closeButton.setOnClickListener(basicClickListener);
-                guideTextView.setText(guideText);
-                break;
-            case END_DRIVE:
-                closeButton.setOnClickListener(endDriveClickListener);
-                guideTextView.setText(guideText);
-                break;
-        }
+        });
     }
 
     @Override
     public void onBackPressed(){
-        return;
+        finish();
     }
 }

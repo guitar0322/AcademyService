@@ -23,6 +23,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="김진짜"/>
+
+<!--        <Button-->
+<!--            android:id="@+id/locationButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:layout_marginLeft="120dp"-->
+<!--            android:text="위치">-->
+
+<!--        </Button>-->
+
     </LinearLayout>
 
     <LinearLayout
@@ -85,6 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
+                android:autoLink="phone"
+                android:layout_marginLeft="4dp"
                 android:text="01023231212">
 
 

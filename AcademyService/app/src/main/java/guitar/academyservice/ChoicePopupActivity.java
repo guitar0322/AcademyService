@@ -3,18 +3,23 @@ package guitar.academyservice;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import guitar.academyservice.ui.login.LoginActivity;
+
 public class ChoicePopupActivity extends Activity {
     TextView guideText;
     Button closeButton;
     Button okButton;
-    int REQUESTCODE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,17 +32,13 @@ public class ChoicePopupActivity extends Activity {
 
         Intent intent = getIntent();
         String data = intent.getStringExtra("guide");
-        REQUESTCODE = intent.getIntExtra("code", 0);
         guideText.setText(data);
 
         okButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v){
-                switch (REQUESTCODE){
-                    case PopupManager.APP_QUIT_CODE:
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        break;
-                }
+                setResult(RESULT_OK);
+                finish();
             }
         });
 
@@ -48,6 +49,7 @@ public class ChoicePopupActivity extends Activity {
             }
         });
     }
+
 
     @Override
     public void onBackPressed(){

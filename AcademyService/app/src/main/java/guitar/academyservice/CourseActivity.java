@@ -11,18 +11,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.skt.Tmap.TMapPoint;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class CourseActivity extends AppCompatActivity {
     ArrayList<String> pointNameList;
     ArrayList<Point> pointList;
+    ArrayList<Point> optPointList;
     Course course;
     ListAdapter pointAdapter;
     ListView pointListView;
+    ProgressBar progressBar;
     ContentValues data;
     String username;
     String courseURL;
@@ -30,7 +36,7 @@ public class CourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-        courseURL = getString(R.string.url) + "drivers/test?";
+        courseURL = getString(R.string.url) + "driver/start?";
         Intent intent = getIntent();
         course = (Course)intent.getSerializableExtra("course");
 
@@ -40,9 +46,16 @@ public class CourseActivity extends AppCompatActivity {
         pointListView = findViewById(R.id.pointList);
         Button driveStartButton = findViewById(R.id.driveStartButton);
         TextView courseNameView = findViewById(R.id.courseTitle);
+        TextView academyNameView = findViewById(R.id.academyTitle);
+        TextView academyPhoneView = findViewById(R.id.academyPhone);
+        TextView academyAddressView = findViewById(R.id.academyAddress);
         pointAdapter = new ListAdapter(this, pointNameList);
 
         courseNameView.setText(course.name);
+        academyNameView.setText(course.academyName);
+        academyPhoneView.setText(course.academyPhone);
+        academyAddressView.setText(course.academyAddress);
+
         pointListView.setAdapter(pointAdapter);
 
         driveStartButton.setOnClickListener(new Button.OnClickListener(){
@@ -52,12 +65,12 @@ public class CourseActivity extends AppCompatActivity {
                 if(checkLocationServicesStatus() == false) {
                     intent = new Intent(CourseActivity.this, PopupActivity.class);
                     intent.putExtra("guide", "운행 시작을 위해선 gps 기능을 활성화 하여야 합니다.");
-                    intent.putExtra("code", PopupActivity.BASIC);
                     startActivity(intent);
                 }
                 else{
                     data.put("username", username);
-                    data.put("pointlist", pointList.toString());
+                    data.put("academy", course.academyName);
+                    data.put("course", course.name);
                     RequestStudentList requestStudentList = new RequestStudentList(courseURL, data);
                     requestStudentList.execute();
                 }
@@ -75,6 +88,12 @@ public class CourseActivity extends AppCompatActivity {
         }
 
         @Override
+        protected  void onPreExecute(){
+            progressBar = findViewById(R.id.loading);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected Object doInBackground(Object[] objects) {
             String result;
             HttpClient httpClient = new HttpClient();
@@ -88,7 +107,8 @@ public class CourseActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            parseStudentList(o.toString());
+            parseDriveInfo(o.toString());
+            progressBar.setVisibility(View.GONE);
             Intent intent = new Intent(CourseActivity.this, DriveActivity.class);
             intent.putExtra("course", course);
             startActivity(intent);
@@ -97,9 +117,28 @@ public class CourseActivity extends AppCompatActivity {
         }
 
     }
-    public void parseStudentList(String result){
+    public void parseDriveInfo(String result){
+        try{
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray pointInfo = jsonObject.getJSONArray("point");
+            JSONArray pathInfo = jsonObject.getJSONArray("path");
+
+            for(int i = 0; i < pointInfo.length(); i++){
+                JSONObject point = pointInfo.getJSONObject(i);
+                JSONArray studentJsonArray = point.getJSONArray("student");
+                ArrayList<Student> studentList = new ArrayList<>();
+                for(int j = 0; j < studentJsonArray.length(); j++){
+                    JSONObject student = studentJsonArray.getJSONObject(j);
+                    studentList.add(new Student(student.getString("name"), student.getString("phone"), student.getString("prName"), student.getString("prPhone")));
+                }
+                optPointList.add(new Point(point.getDouble("latitude"), point.getDouble("longitude"), point.getString("name"), studentList));
+            }
+            course.pointList = optPointList;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         for(int i = 0; i < pointList.size(); i++){
-            pointList.get(i).studentList = new ArrayList<>();
             pointList.get(i).studentList.add(new Student("김정삼", "01012345678", "김삼정", "01098765432"));
             pointList.get(i).studentList.add(new Student("김정사", "01012345678", "김사정", "01098765432"));
             pointList.get(i).studentList.add(new Student("김정오", "01012345678", "김오정", "01098765432"));

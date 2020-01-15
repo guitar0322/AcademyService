@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+        var IMP = window.IMP;
+
+        IMP.init('imp70615266');
+        window.Android.requestData();
+        console.log("test");
+        IMP.certification({ // param
+  }, function (rsp) { // callback
+    if (rsp.success) {
+
+    } else {
+      // 인증 성공 시 로직,
+      // 인증 실패 시 로직,
+    }
+  });
+</script>
+</body>
+</html>
+
