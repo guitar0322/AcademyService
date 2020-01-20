@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -82,7 +85,10 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     MarkerOptions locationMarkerOption;
     Marker studentMarker;
     Marker myLocationMarker;
-
+    ProgressBar progressBar;
+    Button drawerButton;
+    TextView courseTitle;
+    View listFrame;
     PointListFragment pointListFragment;
     StudentListFragment studentListFragment;
 
@@ -108,6 +114,29 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
 
         tMapUtil = new TMapUtil(this);
         busicon = BitmapFactory.decodeResource(this.getResources(), R.drawable.busicon);
+
+        drawerButton = findViewById(R.id.drawer);
+        listFrame = findViewById(R.id.list_frame);
+
+        class DrawerClickListener implements Button.OnClickListener{
+            boolean toggle;
+            @Override
+            public void onClick(View v) {
+                Log.d("draw_test", "flag = " + toggle);
+                if(toggle == false) {
+                    ObjectAnimator anim = ObjectAnimator.ofFloat(listFrame, "translationY", -1200f);
+                    anim.setDuration(500);
+                    anim.start();
+                }
+                else{
+                    ObjectAnimator anim = ObjectAnimator.ofFloat(listFrame, "translationY", 0);
+                    anim.setDuration(500);
+                    anim.start();
+                }
+                toggle = !toggle;
+            }
+        }
+        drawerButton.setOnClickListener(new DrawerClickListener());
 
         gpsManager = new GPSManager(this);
         TimerTask poolGPSLocationTask = new TimerTask(){
@@ -139,7 +168,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void run() {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("username", username);
+                contentValues.put("drvNo", UserInfo.instance.id);
                 contentValues.put("latitude", gpsManager.getLatitude());
                 contentValues.put("longitude", gpsManager.getLongitude());
                 NetworkTask sendLocationTask = new NetworkTask(locationURL, contentValues, SEND_LOCATION_TASK);
@@ -151,6 +180,8 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
 
         Intent intent = getIntent();
         course = (Course)intent.getSerializableExtra("course");
+        courseTitle = findViewById(R.id.courseName);
+        courseTitle.setText(course.name);
         initPointList();
         pointListFragment = new PointListFragment(pointNameList);
 
@@ -178,17 +209,15 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
 
     public void studentPopup(int index){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("username", username);
-        contentValues.put("student", studentList.get(index).phone);
+        contentValues.put("stdntNo", studentList.get(index).id);
         NetworkTask requestStudentLocation = new NetworkTask(studentURL, contentValues, index, POOL_STUDENT_LOCATION_TASK);
         requestStudentLocation.execute();
     }
 
     public void requestCheckPoint(int index){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("academy", course.academyName);
-        contentValues.put("course", course.name);
-        contentValues.put("point", pointList.get(index).name);
+        contentValues.put("routeNo", course.id);
+        contentValues.put("busDetailNo", pointList.get(index).id);
         NetworkTask requestCheckPointTask = new NetworkTask(checkpointURL, contentValues, index, CHECK_POINT_TASK);
         requestCheckPointTask.execute();
     }
@@ -212,6 +241,12 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             this.task = taskCode;
         }
 
+//        @Override
+//        protected  void onPreExecute(){
+//            progressBar = findViewById(R.id.loading);
+//            progressBar.setVisibility(View.VISIBLE);
+//        }
+
         @Override
         protected Object doInBackground(Object[] objects) {
             String result;
@@ -227,6 +262,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         protected void onPostExecute(Object o) {
             Intent intent;
             super.onPostExecute(o);
+//            progressBar.setVisibility(View.GONE);
             switch(task){
                 case END_DIRVE_TASK:
                     poolGPSLocationTimer.cancel();
@@ -288,8 +324,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             case END_DRIVE_CODE:
                 if(resultCode == RESULT_OK) {
                     ContentValues contentValues = new ContentValues();
-                    contentValues.put("academy", course.academyName);
-                    contentValues.put("course", course.name);
+                    contentValues.put("routeNo", course.id);
                     NetworkTask requestEndDrive = new NetworkTask(endDriveURL, contentValues, END_DIRVE_TASK);
                     requestEndDrive.execute();
                 }
@@ -346,8 +381,9 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         Log.d("drive_test", "location result = " + result);
         try{
             JSONObject jsonObject = new JSONObject(result);
-            studentList.get(index).latitude = jsonObject.getDouble("latitude");
-            studentList.get(index).longitude = jsonObject.getDouble("longitude");
+            JSONObject location = jsonObject.getJSONObject("location");
+            studentList.get(index).latitude = location.getDouble("latitude");
+            studentList.get(index).longitude = location.getDouble("longitude");
         }
         catch(JSONException e){
             e.printStackTrace();

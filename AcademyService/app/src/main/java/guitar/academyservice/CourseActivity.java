@@ -1,6 +1,8 @@
 package guitar.academyservice;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -8,8 +10,11 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,12 +27,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class CourseActivity extends AppCompatActivity {
-    ArrayList<String> pointNameList;
     ArrayList<Point> pointList;
-    ArrayList<Point> optPointList;
     Course course;
-    ListAdapter pointAdapter;
-    ListView pointListView;
+    PointListAdapter pointListAdapter;
+    ExpandableListView pointListView;
+    TextView courseTitle;
+    Toolbar toolbar;
+    ActionBar actionBar;
+    Button driveStartButton;
+    Button backButton;
     ProgressBar progressBar;
     ContentValues data;
     String username;
@@ -38,25 +46,33 @@ public class CourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course);
         courseURL = getString(R.string.url) + "driver/start?";
         Intent intent = getIntent();
+
         course = (Course)intent.getSerializableExtra("course");
-
-        initPoint();
+        courseTitle = findViewById(R.id.courseName);
+        courseTitle.setText(course.name);
+        pointList = course.pointList;
         username = getSharedPreferences("UserInfo", MODE_PRIVATE).getString("username", "");
+        driveStartButton = findViewById(R.id.driveStartButton);
+        backButton = findViewById(R.id.backButton);
         data = new ContentValues();
+
         pointListView = findViewById(R.id.pointList);
-        Button driveStartButton = findViewById(R.id.driveStartButton);
-        TextView courseNameView = findViewById(R.id.courseTitle);
-        TextView academyNameView = findViewById(R.id.academyTitle);
-        TextView academyPhoneView = findViewById(R.id.academyPhone);
-        TextView academyAddressView = findViewById(R.id.academyAddress);
-        pointAdapter = new ListAdapter(this, pointNameList);
+        pointListAdapter = new PointListAdapter(this, R.layout.list_layout, R.layout.studentlist_layout, pointList);
+        pointListView.setAdapter(pointListAdapter);
+        pointListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Intent intent = new Intent(CourseActivity.this, StudentInfoActivity.class);
+                intent.putExtra("student", pointList.get(groupPosition).studentList.get(childPosition));
+                startActivity(intent);
+                return false;
+            }
+        });
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
 
-        courseNameView.setText(course.name);
-        academyNameView.setText(course.academyName);
-        academyPhoneView.setText(course.academyPhone);
-        academyAddressView.setText(course.academyAddress);
-
-        pointListView.setAdapter(pointAdapter);
 
         driveStartButton.setOnClickListener(new Button.OnClickListener(){
             @Override
@@ -68,12 +84,20 @@ public class CourseActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else{
-                    data.put("username", username);
-                    data.put("academy", course.academyName);
-                    data.put("course", course.name);
+                    data.put("drvNo", UserInfo.instance.id);
+                    data.put("acaNo", course.academyID);
+                    data.put("routeNo", course.id);
                     RequestStudentList requestStudentList = new RequestStudentList(courseURL, data);
                     requestStudentList.execute();
                 }
+            }
+        });
+
+        backButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(CourseActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -120,39 +144,18 @@ public class CourseActivity extends AppCompatActivity {
     public void parseDriveInfo(String result){
         try{
             JSONObject jsonObject = new JSONObject(result);
-            JSONArray pointInfo = jsonObject.getJSONArray("point");
-            JSONArray pathInfo = jsonObject.getJSONArray("path");
+            JSONArray pathJsonArray = jsonObject.getJSONArray("path");
 
-            for(int i = 0; i < pointInfo.length(); i++){
-                JSONObject point = pointInfo.getJSONObject(i);
-                JSONArray studentJsonArray = point.getJSONArray("student");
-                ArrayList<Student> studentList = new ArrayList<>();
-                for(int j = 0; j < studentJsonArray.length(); j++){
-                    JSONObject student = studentJsonArray.getJSONObject(j);
-                    studentList.add(new Student(student.getString("name"), student.getString("phone"), student.getString("prName"), student.getString("prPhone")));
-                }
-                optPointList.add(new Point(point.getDouble("latitude"), point.getDouble("longitude"), point.getString("name"), studentList));
+            for(int i = 0; i < pathJsonArray.length(); i++){
+                JSONObject path = pathJsonArray.getJSONObject(i);
+                course.addPath(path.getDouble("latitude"), path.getDouble("longitude"));
             }
-            course.pointList = optPointList;
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        for(int i = 0; i < pointList.size(); i++){
-            pointList.get(i).studentList.add(new Student("김정삼", "01012345678", "김삼정", "01098765432"));
-            pointList.get(i).studentList.add(new Student("김정사", "01012345678", "김사정", "01098765432"));
-            pointList.get(i).studentList.add(new Student("김정오", "01012345678", "김오정", "01098765432"));
-        }
     }
 
-    public void initPoint(){
-        pointNameList = new ArrayList<String>();
-        pointList = course.pointList;
-
-        for(int i = 0; i < pointList.size(); i++){
-            pointNameList.add(pointList.get(i).name);
-        }
-    }
 
     public boolean checkLocationServicesStatus() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);

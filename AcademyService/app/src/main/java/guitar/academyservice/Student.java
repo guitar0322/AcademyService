@@ -3,6 +3,7 @@ package guitar.academyservice;
 import java.io.Serializable;
 
 public class Student implements Serializable {
+    int id;
     String name;
     String phone;
     String parentName;
@@ -10,7 +11,8 @@ public class Student implements Serializable {
     double latitude;
     double longitude;
 
-    public Student(String _name, String _phone, String _parentName, String _parentPhone){
+    public Student(int id, String _name, String _phone, String _parentName, String _parentPhone){
+        this.id = id;
         name = _name;
         phone = _phone;
         parentName = _parentName;

@@ -9,24 +9,24 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends BaseAdapter {
+public class CourseListAdapter extends BaseAdapter {
     Context context = null;
     LayoutInflater layoutInflater = null;
-    ArrayList<String> list;
+    ArrayList<Course> courseList;
 
-    public ListAdapter(Context _context, ArrayList<String> list){
+    public CourseListAdapter(Context _context, ArrayList<Course> courseList){
         context = _context;
-        this.list = list;
+        this.courseList = courseList;
         layoutInflater = LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
-        return list.size();
+        return courseList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return courseList.get(position);
     }
 
     @Override
@@ -36,11 +36,15 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = layoutInflater.inflate(R.layout.list_layout, null);
+        View view = layoutInflater.inflate(R.layout.courselist_layout, null);
 
         TextView courseName = view.findViewById(R.id.title);
+        TextView acaName = view.findViewById(R.id.acaName);
+        TextView acaPhone = view.findViewById(R.id.acaPhone);
 
-        courseName.setText(list.get(position));
+        courseName.setText(courseList.get(position).name);
+        acaName.setText(courseList.get(position).academyName);
+        acaPhone.setText(courseList.get(position).academyPhone);
 
         return view;
     }

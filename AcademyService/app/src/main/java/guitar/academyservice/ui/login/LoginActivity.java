@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -40,6 +41,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.prefs.Preferences;
 
 import guitar.academyservice.AcceptActivity;
 import guitar.academyservice.AuthActivity;
@@ -51,6 +54,7 @@ import guitar.academyservice.Point;
 import guitar.academyservice.PopupActivity;
 import guitar.academyservice.R;
 import guitar.academyservice.SignupActivity;
+import guitar.academyservice.UserInfo;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int LOGIN_CODE = 1;
@@ -76,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         loginUrl = getString(R.string.url) + "driver/login?";
 //        if(checkAccessibilityPermissions() == false){
 //            setAccessibilityPermissions();
@@ -88,13 +91,13 @@ public class LoginActivity extends AppCompatActivity {
         else{
             checkGPSPermission();
         }
-        preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        preferences = getSharedPreferences("AutoLogin", MODE_PRIVATE);
         editor = preferences.edit();
         username = preferences.getString("username", "");
         password = preferences.getString("password", "");
 
         if(username != ""){
-            Log.d("login_test", "preference username = " + username);
+            Log.d("autologin_test", "preference username = " + username);
             requestLogin();
         }
         usernameEditText = findViewById(R.id.username);
@@ -316,11 +319,14 @@ public class LoginActivity extends AppCompatActivity {
 
             }
             else {
+                JSONObject driverInfo = jsonObject.getJSONObject("drvInfo");
+                editInfo(driverInfo);
                 JSONArray jsonArray = new JSONArray(jsonObject.getString("course"));
                 ArrayList<Course> courseList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject courseInfo = jsonArray.getJSONObject(i);
-                    courseList.add(new Course(courseInfo.getString("name"), courseInfo.getString("academy"), courseInfo.getString("phone"), courseInfo.getString("address"), null));
+                    courseList.add(new Course(courseInfo.getInt("routeNo"), courseInfo.getString("name"),
+                            courseInfo.getInt("acaNo"), courseInfo.getString("academy"), courseInfo.getString("number"), courseInfo.getString("address"), null));
                     Log.d("json_test", "course name = " + courseInfo.getString("name"));
                 }
 
@@ -330,9 +336,9 @@ public class LoginActivity extends AppCompatActivity {
         catch(JSONException e){
             e.printStackTrace();
             courseList = new ArrayList<>();
-            courseList.add(new Course("숭실대학교 근처 월화", "상도수학학원", "01011111111", "서울특별시 동작구 상도동 111-11",  new ArrayList<Point>()));
-            courseList.add(new Course("상도동일대", "상도태권도", "01022222222", "서울특별시 동작구 상도동 112-32",  new ArrayList<Point>()));
-            courseList.add(new Course("동작아파트단지", "동작수학학원", "01011111111", "서울특별시 동작구 상도동 111-11" ,  new ArrayList<Point>()));
+            courseList.add(new Course(1, "숭실대학교 근처 월화", 1, "상도수학학원", "01011111111", "서울특별시 동작구 상도동 111-11",  new ArrayList<Point>()));
+            courseList.add(new Course(1, "상도동일대", 2, "상도태권도", "01022222222", "서울특별시 동작구 상도동 112-32",  new ArrayList<Point>()));
+            courseList.add(new Course(1, "동작아파트단지", 3, "동작수학학원", "01011111111", "서울특별시 동작구 상도동 111-11" ,  new ArrayList<Point>()));
         }
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -340,5 +346,17 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("course", courseList);
         startActivity(intent);
         finish();
+    }
+
+    public void editInfo(JSONObject info){
+        try {
+            UserInfo.instance.name = info.getString("drvName");
+            UserInfo.instance.id = info.getInt("drvNo");
+            UserInfo.instance.phone = info.getString("drvTel");
+        }
+        catch(Exception e){
+            Log.e("login_error", "throw exception while edit userinfo.");
+            e.printStackTrace();
+        }
     }
 }
