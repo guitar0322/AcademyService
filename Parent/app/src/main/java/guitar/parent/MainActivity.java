@@ -1,20 +1,29 @@
 package guitar.parent;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.PrecomputedText;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+
 import java.util.ArrayList;
 
 import com.google.android.material.navigation.NavigationView;
@@ -22,83 +31,88 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
     static final int APP_QUIT_CODE = 1;
     static final int LOGOUT_CODE = 2;
+    static final int BLOCK_CODE = 3;
 
+    String blockURL;
     ArrayList<Student> studentList;
-    ArrayList<String> studentNameList;
     Student selectedStudent;
+    Switch selectedSwitch;
 
     String username;
-
-    Button infoButton;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    ListView studentListView;
+    Toolbar toolbar;
+    ActionBar actionBar;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        blockURL = getString(R.string.url) + "parent/block?";
         Intent intent = getIntent();
         username = getSharedPreferences("UserInfo", MODE_PRIVATE).getString("username", "");
         if (studentList == null) {
             Log.d("main_test", "studentList is null");
             studentList = (ArrayList<Student>) intent.getSerializableExtra("student");
-            initStudentList();
         }
 
-        studentListView = findViewById(R.id.studentList);
-        infoButton = findViewById(R.id.infoButton);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation);
-        infoButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });
+        toolbar = findViewById(R.id.toolbar);
 
-        ListAdapter studentAdapter = new ListAdapter(this, studentNameList);
+        setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
 
+        ListView studentListView = findViewById(R.id.studentList);
+        StudentListAdapter studentAdapter = new StudentListAdapter(this, this, studentList);
+//
         studentListView.setAdapter(studentAdapter);
-        studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                selectedStudent = studentList.get(position);
-                Intent intent;
-                if (selectedStudent.status == true) {
-                    intent = new Intent(MainActivity.this, DriveActivity.class);
-                    intent.putExtra("student", selectedStudent);
-                    startActivity(intent);
-                } else {
-                    intent = new Intent(MainActivity.this, PopupActivity.class);
-                    intent.putExtra("guide", "운행중이 아닙니다");
-                    startActivity(intent);
-                }
-            }
-        });
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                drawerLayout.closeDrawers();
-                int id = menuItem.getItemId();
-                String title = menuItem.getTitle().toString();
+    }
 
-                if (id == R.id.account) {
-                    Intent intent = new Intent(MainActivity.this, InfoAuthActivity.class);
-                    intent.putExtra("username", username);
-                    startActivity(intent);
+    public void requestBlock(int position, Switch selectedSwitch){
+        selectedStudent = studentList.get(position);
+        this.selectedSwitch = selectedSwitch;
+        Intent intent = new Intent(this, ChoicePopupActivity.class);
+        intent.putExtra("guide", "유해앱 차단기능을 실행하시겠습니까?");
+        startActivityForResult(intent, BLOCK_CODE);
+    }
 
-                } else if (id == R.id.setting) {
-                    Log.d("navigation_test", "setting selected");
-                } else if (id == R.id.logout) {
-                    Intent intent = new Intent(MainActivity.this, ChoicePopupActivity.class);
-                    intent.putExtra("guide", "로그아웃 하시겠습니까?");
-                    startActivityForResult(intent, LOGOUT_CODE);
-                }
-                return false;
-            }
-        });
+    public void openDriveInfo(int position){
+        selectedStudent = studentList.get(position);
+        Intent intent;
+        if (selectedStudent.status == true) {
+            intent = new Intent(MainActivity.this, DriveActivity.class);
+            intent.putExtra("student", selectedStudent);
+            startActivity(intent);
+        } else {
+            intent = new Intent(MainActivity.this, PopupActivity.class);
+            intent.putExtra("guide", "운행중이 아닙니다");
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent intent;
+        switch(item.getItemId()){
+            case R.id.account:
+                intent = new Intent(MainActivity.this, InfoAuthActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+                break;
+            case R.id.logout:
+                intent = new Intent(MainActivity.this, ChoicePopupActivity.class);
+                intent.putExtra("guide", "로그아웃 하시겠습니까?");
+                startActivityForResult(intent, LOGOUT_CODE);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -129,13 +143,56 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
                 break;
+            case BLOCK_CODE:
+                if(resultCode == RESULT_OK){
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put("stdntNo", selectedStudent.id);
+                    if(selectedStudent.block == true)
+                        contentValues.put("status", "N");
+                    else
+                        contentValues.put("status", "Y");
+                    RequestBlockTask requestBlockTask = new RequestBlockTask(blockURL, contentValues);
+                    requestBlockTask.execute();
+                    selectedStudent.block = !selectedStudent.block;
+                }
+                else{
+                    selectedSwitch.toggle();
+                }
         }
     }
 
-    public void initStudentList() {
-        studentNameList = new ArrayList<>();
-        for (int i = 0; i < studentList.size(); i++) {
-            studentNameList.add(studentList.get(i).name);
+    public class RequestBlockTask extends AsyncTask {
+        private String url;
+        private ContentValues values;
+
+        public RequestBlockTask(String url, ContentValues values){
+            this.url = url;
+            this.values = values;
+        }
+        @Override
+        protected void onPreExecute(){
+            progressBar = findViewById(R.id.loading);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            String result;
+            HttpClient httpClient = new HttpClient();
+            result = httpClient.request(url, values);
+            if(result == "" || result == null){
+                result = "testresult";
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            progressBar.setVisibility(View.GONE);
+
+            //Todo after httpNetworking.
+            //ex)Intent, terminate progress, courselist setting
         }
     }
+
 }

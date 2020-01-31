@@ -73,16 +73,18 @@ public class InfoAuthActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
+            Intent intent;
+            progressBar.setVisibility(View.GONE);
             if(parseAuthResult(o.toString()) == true) {
                 Log.d("infoauth_test", "success");
-                progressBar.setVisibility(View.GONE);
-                Intent intent = new Intent(InfoAuthActivity.this, InfoEditActivity.class);
+                intent = new Intent(InfoAuthActivity.this, InfoEditActivity.class);
                 intent.putExtra("username", username);
                 startActivity(intent);
             }
             else{
-                Log.d("infoauth_test", "reject");
-
+                intent = new Intent(InfoAuthActivity.this, PopupActivity.class);
+                intent.putExtra("guide", "회원정보가 일치하지 않습니다");
+                startActivity(intent);
             }
             //Todo after httpNetworking.
             //ex)Intent, terminate progress, courselist setting

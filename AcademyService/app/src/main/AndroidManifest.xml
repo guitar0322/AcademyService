@@ -20,8 +20,8 @@
         <activity android:name=".AcceptActivity"
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTask">
-
         </activity>
+
         <activity android:name=".InfoEditActivity" />
         <activity android:name=".InfoAuthActivity" />
         <activity android:name=".AuthActivity" />

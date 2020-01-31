@@ -54,24 +54,6 @@ public class PointListFragment extends Fragment {
             }
         });
 
-        Button endButton = rootView.findViewById(R.id.endButton);
-        endButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                boolean check = true;
-                for(int i = 0; i < activity.pointList.size(); i++){
-                    if(activity.pointList.get(i).check == false){
-                        check = false;
-                    }
-                }
-                if(check == true){
-                    activity.endDrive();
-                }
-                else{
-                    activity.endDriveError();
-                }
-            }
-        });
         return rootView;
     }
 }

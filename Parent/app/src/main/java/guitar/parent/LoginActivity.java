@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.prefs.Preferences;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText usernameEditText;
     EditText passwordEditText;
     Button loginButton;
+    Button signupButton;
     ProgressBar progressBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             checkGPSPermission();
         }
 
-        preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        preferences = getSharedPreferences("AutoLogin", MODE_PRIVATE);
         editor = preferences.edit();
         username = preferences.getString("username", "");
         password = preferences.getString("password", "");
@@ -77,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
+        signupButton = findViewById(R.id.signup);
         autoLoginCheckBox = findViewById(R.id.autoLogin);
 
         loginButton.setOnClickListener(new Button.OnClickListener(){
@@ -89,6 +92,14 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     requestLogin();
                 }
+            }
+        });
+
+        signupButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -194,6 +205,10 @@ public class LoginActivity extends AppCompatActivity {
         ContentValues loginData = new ContentValues();
         loginData.put("username", username);
         loginData.put("password", password);
+        SharedPreferences preferences = getSharedPreferences("DeviceToken", MODE_PRIVATE);;
+
+        loginData.put("token", preferences.getString("token", ""));
+
         RequestLoginTask requestLoginTask = new RequestLoginTask(loginUrl, loginData);
         requestLoginTask.execute();
     }
@@ -238,11 +253,6 @@ public class LoginActivity extends AppCompatActivity {
                 insertUserInfo(username, password);
 
             parseStudentInfo(o.toString());
-
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("student", studentList);
-            startActivity(intent);
-            finish();
             //Todo after httpNetworking.
             //ex)Intent, terminate progress, studentlist setting
         }
@@ -252,7 +262,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("login_test", "login result = " + result);
         try{
             JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getString("status").equals("REJECT") || true){
+            if(jsonObject.getString("status").equals("REJECT")){
                 Log.d("login_test", "REJECT");
                 Intent intent = new Intent(LoginActivity.this, PopupActivity.class);
                 intent.putExtra("guide", "로그인 정보가 일치하지 않습니다");
@@ -263,24 +273,43 @@ public class LoginActivity extends AppCompatActivity {
                 JSONArray studentJsonArray = jsonObject.getJSONArray("student");
                 for (int i = 0; i < studentJsonArray.length(); i++) {
                     JSONObject studentInfo = studentJsonArray.getJSONObject(i);
-                    JSONObject academyInfo = studentInfo.getJSONObject("academy");
-                    JSONObject courseInfo = academyInfo.getJSONObject("course");
-
                     studentList = new ArrayList<>();
-                    studentList.add(new Student(studentInfo.getString("name"), studentInfo.getString("phone"),
-                            academyInfo.getString("name"), academyInfo.getString("phone"),
-                            courseInfo.getString("name"), courseInfo.getString("driver"), courseInfo.getString("phone"), courseInfo.getBoolean("status")));
-                    Log.d("json_test", "academy name = " + studentInfo.getString("name"));
+                    studentList.add(new Student(studentInfo.getInt("sNumber"), studentInfo.getString("sName"), studentInfo.getString("sTel"), studentInfo.getString("sStatus"),
+                            studentInfo.getString("aName"), studentInfo.getString("aTel"),
+                            studentInfo.getInt("rNumber"), studentInfo.getString("rName"),
+                            studentInfo.getInt("dNumber"), studentInfo.getString("dName"), studentInfo.getString("dTel"), studentInfo.getString("bStatus")));
                 }
             }
         }
         catch(JSONException e){
             e.printStackTrace();
             studentList = new ArrayList<>();
-            studentList.add(new Student("김동현", "01012345678",  "수학학원", "01044444444", "동작구일대 월화", "이기사", "01011111111",true));
-            studentList.add(new Student("김동현", "01012345678",  "영어학원", "01055555555", "동작아파트 수목", "김기사", "01022222222",false));
-            studentList.add(new Student("김동찬","01023456789",   "수학학원", "01066666666", "동작초등학교정문 월화","최기사", "01033333333", false));
+            studentList.add(new Student(1,"김동현", "01012345678",  "N",
+                    "수학학원", "01044444444",
+                    1,"동작구일대 월화",
+                    1,"이기사", "01011111111","Y"));
+
+            studentList.add(new Student(1,"김동현", "01012345678",  "N",
+                    "영어학원", "01055555555",
+                    1, "동작아파트 수목",
+                    2,"김기사", "01022222222","N"));
+
+            studentList.add(new Student(2,"김동찬","01023456789",   "N",
+                    "수학학원", "01066666666",
+                    1,"동작초등학교정문 월화",
+                    3,"최기사", "01033333333", "N"));
         }
+        editInfo();
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("student", studentList);
+        startActivity(intent);
+        finish();
     }
 
+    public void editInfo(){
+        SharedPreferences preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("username", username);
+        editor.commit();
+    }
 }

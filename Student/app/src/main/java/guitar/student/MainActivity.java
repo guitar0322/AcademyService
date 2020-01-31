@@ -1,7 +1,9 @@
 package guitar.student;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.ContentValues;
@@ -12,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,52 +28,42 @@ public class MainActivity extends AppCompatActivity {
     static final int LOGOUT_CODE = 2;
 
     ArrayList<Academy> academyList;
-    ArrayList<String> academyNameList;
     Academy selectedAcademy;
-    ContentValues data;
+
     String username;
 
-    Button infoButton;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
+    Toolbar toolbar;
+    ActionBar actionBar;
+    ListView academyListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView studentListView = findViewById(R.id.academyList);
         Intent intent = getIntent();
-        username = getSharedPreferences("UserInfo", MODE_PRIVATE).getString("username", "");
+        username = getSharedPreferences("AutoLogin", MODE_PRIVATE).getString("username", "");
         if(academyList == null){
-            Log.d("main_test", "academyList is null");
             academyList = (ArrayList<Academy>)intent.getSerializableExtra("academy");
-            initAcademyList();
+            Log.d("main_test", "academyList size is " + academyList.size());
         }
-        data = new ContentValues();
 
-        infoButton = findViewById(R.id.infoButton);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation);
-        infoButton.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                drawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
 
-
-        ListAdapter studentAdapter = new ListAdapter(this, academyNameList);
-
-        studentListView.setAdapter(studentAdapter);
-        studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        academyListView = findViewById(R.id.academyList);
+        AcademyListAdapter academyListAdapter = new AcademyListAdapter(this, academyList);
+        academyListView.setAdapter(academyListAdapter);
+        academyListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView parent, View v, int position, long id){
                 Intent intent;
                 selectedAcademy = academyList.get(position);
                 if (selectedAcademy.status == true) {
                     if (checkLocationServicesStatus() == false) {
                         intent = new Intent(MainActivity.this, PopupActivity.class);
-                        intent.putExtra("guide", "운행 시작을 위해선 gps 기능을 활성화 하여야 합니다.");
+                        intent.putExtra("guide", "gps 기능을 활성화 하여야 합니다.");
                         startActivity(intent);
                     } else {
                         intent = new Intent(MainActivity.this, DriveActivity.class);
@@ -86,31 +79,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                drawerLayout.closeDrawers();
-                int id = menuItem.getItemId();
-                String title = menuItem.getTitle().toString();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
-                if(id == R.id.account){
-                    Intent intent = new Intent(MainActivity.this, InfoAuthActivity.class);
-                    intent.putExtra("username", username);
-                    startActivity(intent);
-
-                }
-                else if(id == R.id.setting){
-                    Log.d("navigation_test", "setting selected");
-                }
-                else if(id == R.id.logout){
-                    Intent intent = new Intent(MainActivity.this, ChoicePopupActivity.class);
-                    intent.putExtra("guide", "로그아웃 하시겠습니까?");
-                    startActivityForResult(intent, LOGOUT_CODE);
-                }
-                return false;
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent intent;
+        switch(item.getItemId()){
+            case R.id.account:
+                intent = new Intent(MainActivity.this, InfoAuthActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+                break;
+            case R.id.logout:
+                intent = new Intent(MainActivity.this, ChoicePopupActivity.class);
+                intent.putExtra("guide", "로그아웃 하시겠습니까?");
+                startActivityForResult(intent, LOGOUT_CODE);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -148,12 +140,5 @@ public class MainActivity extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-    public void initAcademyList(){
-        academyNameList = new ArrayList<>();
-        for(int i = 0; i < academyList.size(); i++){
-            academyNameList.add(academyList.get(i).name);
-        }
     }
 }

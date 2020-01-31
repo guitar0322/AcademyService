@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     Course selectedCourse;
 
     ProgressBar progressBar;
-    DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
 
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        drawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -189,13 +187,13 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Point> pointList = new ArrayList<>();
             for (int i = 0; i < pointJsonArray.length(); i++) {
                 JSONObject point = pointJsonArray.getJSONObject(i);
-                JSONArray studentJsonArray = point.getJSONArray("stndtInfo");
+                JSONArray studentJsonArray = point.getJSONArray("stdntInfo");
                 ArrayList<Student> studentList = new ArrayList<>();
                 for (int j = 0; j < studentJsonArray.length(); j++) {
                     JSONObject student = studentJsonArray.getJSONObject(j);
-                    studentList.add(new Student(student.getInt("stdntNo"), student.getString("name"), student.getString("tel"), student.getString("prName"), student.getString("prPhone")));
+                    studentList.add(new Student(student.getInt("stdNo"), student.getString("name"), student.getString("tel"), "보호자이름", "보호자 연락처"));
                 }
-                pointList.add(new Point(point.getInt("busDetailNo"), point.getDouble("lat"), point.getDouble("lng"), point.getString("name"), studentList));
+                pointList.add(new Point(point.getInt("stopNo"), point.getDouble("lat"), point.getDouble("lng"), point.getString("name"), studentList));
             }
             selectedCourse.pointList = pointList;
         } catch (Exception e) {

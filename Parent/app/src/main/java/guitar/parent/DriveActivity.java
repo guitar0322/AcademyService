@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,12 +41,10 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     String refreshURL;
     Student student;
 
-    TextView academyNameView;
-    TextView driverNameView;
-    TextView driverPhoneView;
-    TextView arriveTimeView;
     Button refreshButton;
-
+    Button backButton;
+    PopupWindow popupWindow;
+    TextView studentName;
 
     TimerTask poolDriveInfoTask;
     Timer poolDriveInfoTimer;
@@ -67,11 +68,17 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
 
         Intent intent = getIntent();
         student = (Student) intent.getSerializableExtra("student");
-        initCourseInfo();
         contentValues = new ContentValues();
         contentValues.put("academy", student.academyPhone);
         contentValues.put("course", student.courseName);
         contentValues.put("student", student.phone);
+
+        studentName = findViewById(R.id.studentName);
+        studentName.setText(student.name);
+
+        View popupView = getLayoutInflater().inflate(R.layout.activity_drive_info, null);
+        popupWindow = new PopupWindow(popupView);
+        popupWindow.setFocusable(true);
 
         RequestRefresh requestRefresh = new RequestRefresh(refreshURL, contentValues);
         requestRefresh.execute();
@@ -82,6 +89,16 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             public void onClick(View view){
                 RequestRefresh requestRefresh = new RequestRefresh(refreshURL, contentValues);
                 requestRefresh.execute();
+            }
+        });
+
+        backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(DriveActivity.this, ChoicePopupActivity.class);
+                intent.putExtra("guide", "메인화면으로 이동하시겠습니까?");
+                startActivityForResult(intent, END_DRIVE_CODE);
             }
         });
 
@@ -114,35 +131,29 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode){
             case END_DRIVE_CODE:
-                Intent intent = new Intent(DriveActivity.this, MainActivity.class);
-                startActivity(intent);
-                break;
+                if(resultCode == RESULT_OK) {
+                    Intent intent = new Intent(DriveActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
+                }
         }
-    }
-
-    public void initCourseInfo(){
-        academyNameView = findViewById(R.id.academyName);
-        driverNameView = findViewById(R.id.driverName);
-        driverPhoneView = findViewById(R.id.driverPhone);
-        arriveTimeView = findViewById(R.id.arriveTime);
-
-        academyNameView.setText(student.academyName);
-        driverNameView.setText(student.driverName);
-        driverPhoneView.setText(student.driverPhone);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng seoul = new LatLng(37.56, 126.97);
+        LatLng seoul = new LatLng(37.494870, 126.960763);
 
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(seoul);
-        markerOptions.title("서울");
-        markerOptions.snippet("한국의 수도");
-        mMap.addMarker(markerOptions);
+//        MarkerOptions markerOptions = new MarkerOptions();
+//        markerOptions.position(seoul);
+//        markerOptions.title("서울");
+//        markerOptions.snippet("한국의 수도");
+//        mMap.addMarker(markerOptions);
 
+        View infoWindow = getLayoutInflater().inflate(R.layout.activity_drive_info, null);
+        DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, student);
+        mMap.setInfoWindowAdapter(driverInfoAdapter);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(seoul));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
 
@@ -177,8 +188,8 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             //Todo after httpNetworking.
             //ex)Intent, terminate progress, courselist setting
         }
-
     }
+
     public void googleMapUpdate(){
         if(driverMarker == null){
             driverMarkerOption = new MarkerOptions();
@@ -214,13 +225,19 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         }
         catch(Exception e){
             e.printStackTrace();
+            student.driverLatitude = 37.494870;
+            student.driverLongitude = 126.960763;
+            student.studentLatitude = 37.494870;
+            student.studentLongitude = 126.960760;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+            try {
+                student.arriveTime = simpleDateFormat.parse("2020-01-29 14:00:00");
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
+            }
         }
 
-        if(student.arriveTime != null)
-            arriveTimeView.setText(student.arriveTime.toString());
-        else{
-            arriveTimeView.setText("10분후 도착합니다.");
-        }
         googleMapUpdate();
     }
 }

@@ -68,12 +68,13 @@ public class InfoEditActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode){
             case EDIT_INFO_CODE:
-                SharedPreferences preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);;
+                SharedPreferences preferences = getSharedPreferences("AutoLogin", MODE_PRIVATE);;
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("username", "");
                 editor.putString("password","");
                 editor.commit();
                 Intent intent = new Intent(InfoEditActivity.this, LoginActivity.class);
+                finish();
                 startActivity(intent);
                 break;
         }
@@ -118,7 +119,7 @@ public class InfoEditActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             Intent intent = new Intent(InfoEditActivity.this, PopupActivity.class);
             intent.putExtra("guide", "회원정보 변경에 성공하였습니다.\n다시 로그인 해주십시오.");
-            startActivity(intent);
+            startActivityForResult(intent, EDIT_INFO_CODE);
 
             //Todo after httpNetworking.
             //ex)Intent, terminate progress, courselist setting

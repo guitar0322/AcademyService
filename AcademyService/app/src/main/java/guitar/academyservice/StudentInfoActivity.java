@@ -13,7 +13,6 @@ import android.widget.TextView;
 public class StudentInfoActivity extends Activity {
 
     Student student;
-    DriveActivity driveActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +26,14 @@ public class StudentInfoActivity extends Activity {
         TextView phoneView = findViewById(R.id.studentPhone);
         TextView parentNameView = findViewById(R.id.parentName);
         TextView parentPhoneView = findViewById(R.id.parentPhone);
+        Button locationButton = findViewById(R.id.locationButton);
+        locationButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
 
         nameView.setText(student.name);
         phoneView.setText(student.phone);

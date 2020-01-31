@@ -15,19 +15,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:layout_marginStart="8dp"
             android:id="@+id/courseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:textSize="20dp">
 
         </TextView>
 
         <Button
+            android:layout_marginEnd="8dp"
             android:id="@+id/backButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="left|center_vertical"
+            android:layout_gravity="right|center_vertical"
             android:background="@drawable/back_icon">
 
         </Button>
@@ -35,50 +37,48 @@
     </androidx.appcompat.widget.Toolbar>
 
     <fragment
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/googleMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:context=".MapsActivity" />
 
+    <androidx.constraintlayout.widget.Guideline
+        app:layout_constraintGuide_percent="0.9"
+        android:orientation="horizontal"
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </androidx.constraintlayout.widget.Guideline>
     <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/list_frame"
-        android:background="@drawable/list_frame"
-        android:layout_marginTop="600dp"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:orientation="vertical">
+        android:layout_height="500dp"
+        android:background="@drawable/list_frame"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        tools:layout_editor_absoluteX="0dp">
 
         <Button
             android:id="@+id/drawer"
-            android:layout_marginTop="12dp"
-            android:layout_gravity="center"
             android:layout_width="150dp"
-            android:layout_height="4dp"
+            android:layout_height="8dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
             android:background="@drawable/drawer">
 
         </Button>
 
-        <TextView
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-        </TextView>
-
         <FrameLayout
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:layout_gravity="bottom">
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp">
 
         </FrameLayout>
     </LinearLayout>

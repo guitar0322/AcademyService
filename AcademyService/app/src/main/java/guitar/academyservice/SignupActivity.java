@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
@@ -16,10 +17,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.json.JSONObject;
+
 import guitar.academyservice.ui.login.LoginActivity;
 
 public class SignupActivity extends AppCompatActivity {
     private static final int SIGNUP_CODE = 1;
+    private static final int SIGNUP_FAIL_CODE=2;
     String signupURL;
     String username;
     String password1;
@@ -57,6 +63,10 @@ public class SignupActivity extends AppCompatActivity {
                     contentValues.put("username", username);
                     contentValues.put("password", password1);
                     contentValues.put("name", name);
+
+                    SharedPreferences preferences = getSharedPreferences("DeviceToken", MODE_PRIVATE);;
+
+                    contentValues.put("deviceToken", preferences.getString("token", ""));
                     RequestSignup requestSignup = new RequestSignup(signupURL, contentValues);
                     requestSignup.execute();
                 }
@@ -120,11 +130,32 @@ public class SignupActivity extends AppCompatActivity {
             super.onPostExecute(o);
             Log.d("signup_test", o.toString());
             progressBar.setVisibility(View.GONE);
-            Intent intent = new Intent(SignupActivity.this, PopupActivity.class);
-            intent.putExtra("guide", "회원가입성공. 로그인 해주십시오.");
-            startActivityForResult(intent, SIGNUP_CODE);
+            parseSignupResult(o.toString());
             //Todo after httpNetworking.
             //ex)Intent, terminate progress, courselist setting
+        }
+    }
+
+    public void parseSignupResult(String info){
+        Intent intent;
+        try{
+            JSONObject result = new JSONObject(info);
+            if(result.getString("status").equals("ALREADY_USED")){
+                intent = new Intent(SignupActivity.this, PopupActivity.class);
+                intent.putExtra("guide", "이미 사용중인 회원정보입니다");
+                startActivityForResult(intent, SIGNUP_FAIL_CODE);
+            }
+            else if(result.getString("status").equals("ACCEPT")){
+                intent = new Intent(SignupActivity.this, PopupActivity.class);
+                intent.putExtra("guide", "회원가입 성공. 로그인 하여 주십시오");
+                startActivityForResult(intent, SIGNUP_CODE);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            intent = new Intent(SignupActivity.this, PopupActivity.class);
+            intent.putExtra("guide", "회원가입 성공. 로그인 하여 주십시오");
+            startActivityForResult(intent, SIGNUP_CODE);
         }
     }
 }

@@ -68,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
     String password;
     EditText usernameEditText;
     EditText passwordEditText;
+    Button loginButton;
+    Button signupButton;
     ProgressBar progressBar;
     CheckBox autoLoginCheckBox;
 
@@ -81,9 +83,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginUrl = getString(R.string.url) + "driver/login?";
-//        if(checkAccessibilityPermissions() == false){
-//            setAccessibilityPermissions();
-//        }
 
         if(checkLocationServicesStatus() == false){
             showDialogForLocationServiceSetting();
@@ -102,8 +101,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
-        final Button signupButton = findViewById(R.id.signup);
+        loginButton = findViewById(R.id.login);
+        signupButton = findViewById(R.id.signup);
         autoLoginCheckBox = findViewById(R.id.autoLogin);
 
         loginButton.setOnClickListener(new Button.OnClickListener(){
@@ -136,33 +135,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(intent, APP_QUIT_CODE);
     }
 
-    public boolean checkAccessibilityPermissions(){
-        AccessibilityManager accessibilityManager = (AccessibilityManager)getSystemService(Context.ACCESSIBILITY_SERVICE);
-
-        List<AccessibilityServiceInfo> list = accessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.DEFAULT);
-
-        Log.d("service_test", "size : " + list.size());
-        for(int i = 0; i < list.size(); i++){
-            AccessibilityServiceInfo info = list.get(i);
-            if(info.getResolveInfo().serviceInfo.packageName.equals(getApplication().getPackageName())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void setAccessibilityPermissions(){
-        AlertDialog.Builder permissionDialog = new AlertDialog.Builder(this);
-        permissionDialog.setTitle("접근성 권한 설정");
-        permissionDialog.setMessage("앱을 사용하기 위해 접근성 권한이 필요합니다.");
-        permissionDialog.setPositiveButton("허용", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-                return;
-            }
-        }).create().show();
-    }
     public void requestLogin(){
         ContentValues loginData = new ContentValues();
         loginData.put("username", username);

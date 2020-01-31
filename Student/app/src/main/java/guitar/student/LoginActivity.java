@@ -2,8 +2,10 @@ package guitar.student;
 
 
 import android.Manifest;
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +13,10 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -49,13 +54,18 @@ public class LoginActivity extends AppCompatActivity {
     EditText usernameEditText;
     EditText passwordEditText;
     Button loginButton;
+    Button signupButton;
     CheckBox autoLoginCheckBox;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginUrl = getString(R.string.url) + "student/login?";
+        loginUrl = getString(R.string.url) + "stdnt/login?";
+
+        if (checkAccessibilityPermissions() == false) {
+            setAccessibilityPermissions();
+        }
 
         if(!checkLocationServicesStatus()){
             showDialogForLocationServiceSetting();
@@ -64,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             checkGPSPermission();
         }
 
-        preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        preferences = getSharedPreferences("AutoLogin", MODE_PRIVATE);
         editor = preferences.edit();
         username = preferences.getString("username", "");
         password = preferences.getString("password", "");
@@ -76,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
+
         autoLoginCheckBox = findViewById(R.id.autoLogin);
 
         loginButton.setOnClickListener(new Button.OnClickListener(){
@@ -88,6 +99,16 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     requestLogin();
                 }
+            }
+        });
+
+        signupButton = findViewById(R.id.signup);
+
+        signupButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -120,6 +141,35 @@ public class LoginActivity extends AppCompatActivity {
                     android.os.Process.killProcess(android.os.Process.myPid());
                 }
         }
+    }
+
+
+    public boolean checkAccessibilityPermissions(){
+        AccessibilityManager accessibilityManager = (AccessibilityManager)getSystemService(Context.ACCESSIBILITY_SERVICE);
+
+        List<AccessibilityServiceInfo> list = accessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.DEFAULT);
+
+        Log.d("service_test", "size : " + list.size());
+        for(int i = 0; i < list.size(); i++){
+            AccessibilityServiceInfo info = list.get(i);
+            if(info.getResolveInfo().serviceInfo.packageName.equals(getApplication().getPackageName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void setAccessibilityPermissions(){
+        AlertDialog.Builder permissionDialog = new AlertDialog.Builder(this);
+        permissionDialog.setTitle("접근성 권한 설정");
+        permissionDialog.setMessage("앱을 사용하기 위해 접근성 권한이 필요합니다.");
+        permissionDialog.setPositiveButton("허용", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+                return;
+            }
+        }).create().show();
     }
 
     public void checkGPSPermission(){
@@ -191,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void requestLogin(){
         ContentValues loginData = new ContentValues();
-        loginData.put("username", username);
+        loginData.put("tel", username);
         loginData.put("password", password);
         RequestLogin requestLogin = new RequestLogin(loginUrl, loginData);
         requestLogin.execute();
@@ -236,10 +286,6 @@ public class LoginActivity extends AppCompatActivity {
                 insertUserInfo(username, password);
 
             progressBar.setVisibility(View.GONE);
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("academy", academyList);
-            startActivity(intent);
-            finish();
             //Todo after httpNetworking.
             //ex)Intent, terminate progress, courselist setting
         }
@@ -249,7 +295,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("login_test", "login result = " + result);
         try{
             JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getString("status").equals("REJECT") || true){
+            if(jsonObject.getString("status").equals("REJECT")){
                 Log.d("login_test", "REJECT");
                 Intent intent = new Intent(LoginActivity.this, PopupActivity.class);
                 intent.putExtra("guide", "로그인 정보가 일치하지 않습니다");
@@ -258,21 +304,39 @@ public class LoginActivity extends AppCompatActivity {
             }
             else {
                 JSONArray academyJsonArray = new JSONArray(jsonObject.getString("academy"));
+                editInfo(jsonObject.getJSONObject("stdntInfo"));
                 for (int i = 0; i < academyJsonArray.length(); i++) {
                     JSONObject academyInfo = academyJsonArray.getJSONObject(i);
-                    JSONObject courseInfo = academyInfo.getJSONObject("course");
+                    JSONObject courseInfo = academyInfo.getJSONObject("courses");
                     academyList = new ArrayList<>();
                     academyList.add(new Academy(academyInfo.getString("name"), academyInfo.getString("phone"),
-                            courseInfo.getString("name"), courseInfo.getString("driver"), courseInfo.getString("phone"), courseInfo.getBoolean("status")));
+                            courseInfo.getInt("routeNo"), courseInfo.getString("name"), courseInfo.getString("driver"), courseInfo.getString("phone"), courseInfo.getString("status")));
                     Log.d("json_test", "academy name = " + academyInfo.getString("name"));
                 }
             }
         }
         catch(JSONException e){
-            e.printStackTrace();
             academyList = new ArrayList<>();
-            academyList.add(new Academy("수학학원", "01044444444", "동작아파트 월화", "이기사", "01011111111", true));
-            academyList.add(new Academy("영어학원", "01055555555", "동작초등학교 수목" ,"김기사", "01022222222", false));
+            academyList.add(new Academy("수학학원", "01044444444", 1,"동작아파트 월화", "이기사", "01011111111", "Y"));
+            academyList.add(new Academy("영어학원", "01055555555", 2,"동작초등학교 수목" ,"김기사", "01022222222", "N"));
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("academy", academyList);
+        startActivity(intent);
+        finish();
+    }
+
+    public void editInfo(JSONObject info){
+        try {
+            UserInfo.instance.name = info.getString("name");
+            UserInfo.instance.id = info.getInt("stdntNo");
+            UserInfo.instance.phone = info.getString("tel");
+        }
+        catch(Exception e){
+            Log.e("login_error", "throw exception while edit userinfo.");
+            e.printStackTrace();
         }
     }
 }

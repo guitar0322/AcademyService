@@ -6,6 +6,7 @@ import java.util.Date;
 public class Academy implements Serializable {
     String name;
     String phone;
+    int courseID;
     String courseName;
     String driverName;
     String driverPhone;
@@ -14,13 +15,17 @@ public class Academy implements Serializable {
     Date arriveTime;
     boolean status;
 
-    public Academy(String name, String phone, String courseName, String driverName, String driverPhone, boolean status){
+    public Academy(String name, String phone, int courseID, String courseName, String driverName, String driverPhone, String status){
         this.name = name;
         this.phone = phone;
+        this.courseID = courseID;
         this.courseName = courseName;
         this.driverName = driverName;
         this.driverPhone = driverPhone;
-        this.status = status;
+        if(status.equals("Y"))
+            this.status = true;
+        else
+            this.status = false;
     }
 
     public void setLocation(double latitude, double longitude){

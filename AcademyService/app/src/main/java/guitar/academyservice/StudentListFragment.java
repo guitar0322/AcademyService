@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -26,12 +27,10 @@ import static android.app.Activity.RESULT_OK;
  */
 public class StudentListFragment extends Fragment {
     private static final int CHECK_POINT_CODE = 1;
-    ArrayList<String> studentList;
-    int index;
+    ArrayList<Student> studentList;
     DriveActivity activity;
-    public StudentListFragment(ArrayList<String> list, int index) {
+    public StudentListFragment(ArrayList<Student> list) {
         studentList = list;
-        this.index = index;
         // Required empty public constructor
     }
 
@@ -53,10 +52,12 @@ public class StudentListFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_student_list, container, false);
 
-        ListAdapter listAdapter = new ListAdapter(activity, studentList);
-        ListView pointListView = rootView.findViewById(R.id.studentList);
-        pointListView.setAdapter(listAdapter);
+        final DriveStulistAdapter stulistAdapter = new DriveStulistAdapter(activity, studentList, activity);
+        ListView studentListView = rootView.findViewById(R.id.studentList);
+        studentListView.setAdapter(stulistAdapter);
 
+        TextView pointName = rootView.findViewById(R.id.pointName);
+        pointName.setText(activity.pointList.get(activity.curPointIdx).name);
         Button backButton = rootView.findViewById(R.id.backButton);
         Button checkButton = rootView.findViewById(R.id.checkButton);
 
@@ -70,23 +71,17 @@ public class StudentListFragment extends Fragment {
         checkButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(activity.pointList.get(index).check == true){
+                if(activity.pointList.get(activity.curPointIdx).check == true){
                     Intent intent1 = new Intent(activity, PopupActivity.class);
-                    intent1.putExtra("guide", "이미 체크된 경유지입니다");
+                    intent1.putExtra("guide", "이미 체크되었습니다");
                     startActivity(intent1);
                     return;
                 }
                 else{
                     Intent intent = new Intent(activity, ChoicePopupActivity.class);
-                    intent.putExtra("guide", "경유지 체크를 하시겠습니까?");
+                    intent.putExtra("guide", "체크완료 하시겠습니까?");
                     startActivityForResult(intent, CHECK_POINT_CODE);
                 }
-            }
-        });
-        pointListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                activity.studentPopup(position);
             }
         });
         return rootView;
@@ -99,11 +94,11 @@ public class StudentListFragment extends Fragment {
             case CHECK_POINT_CODE:
                 if(resultCode == RESULT_OK){
                     Log.d("_test", "result_ok");
-                    if(index == 0){
-                        activity.requestCheckPoint(index);
+                    if(activity.curPointIdx == 0){
+                        activity.requestCheckPoint(activity.curPointIdx);
                     }
-                    else if (activity.pointList.get(index - 1).check == true) {
-                        activity.requestCheckPoint(index);
+                    else if (activity.pointList.get(activity.curPointIdx - 1).check == true) {
+                        activity.requestCheckPoint(activity.curPointIdx);
                     }
                     else{
                         activity.pointCheckError();

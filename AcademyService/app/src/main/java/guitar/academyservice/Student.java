@@ -10,6 +10,7 @@ public class Student implements Serializable {
     String parentPhone;
     double latitude;
     double longitude;
+    boolean check;
 
     public Student(int id, String _name, String _phone, String _parentName, String _parentPhone){
         this.id = id;

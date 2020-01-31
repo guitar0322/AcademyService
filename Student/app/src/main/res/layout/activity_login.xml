@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".ui.login.LoginActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,75 +18,156 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="16dp">
 
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/logo">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="24dp"
+                android:text="아이디"
+                android:textSize="20dp">
+
+            </TextView>
+
             <EditText
                 android:id="@+id/username"
                 android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="96dp"
-                android:layout_marginEnd="24dp"
+                android:layout_height="52dp"
                 android:layout_gravity="center"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:selectAllOnFocus="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/login_editor"
+                android:hint="연락처11자리"
+                android:padding="12dp"
+                android:selectAllOnFocus="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="8dp"
+                android:text="비밀번호"
+                android:textSize="20dp"></TextView>
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="320dp"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:layout_gravity="center"
-                android:hint="@string/prompt_password"
+                android:background="@drawable/login_editor"
+                android:hint="비밀번호 8 ~ 16자리"
                 android:imeActionLabel="@string/action_signup"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:selectAllOnFocus="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username" />
+                android:padding="12dp"
+                android:selectAllOnFocus="true">
+
+            </EditText>
 
             <CheckBox
                 android:id="@+id/autoLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="자동로그인"
-                android:layout_marginStart="48dp">
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="8dp"
+                android:text="자동로그인">
 
             </CheckBox>
 
             <Button
-                android:id="@+id/signup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="32dp"
-                android:text="@string/action_signup"
-                app:layout_constraintVertical_bias="0.068" />
-
-            <Button
                 android:id="@+id/login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="320dp"
+                android:layout_height="52dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/login_button"
                 android:text="@string/action_login"
+                android:textColor="@color/white"
+                android:textSize="30dp"
                 app:layout_constraintVertical_bias="0.2" />
+
         </LinearLayout>
 
         <ProgressBar
+            android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/loading"
-            android:visibility="gone"
-            android:layout_gravity="center_vertical|center_horizontal">
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:visibility="gone">
 
         </ProgressBar>
 
     </FrameLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/signup"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:background="@color/transparent"
+            android:text="@string/action_signup" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="|"></TextView>
+
+        <Button
+            android:id="@+id/findID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:text="아이디 찾기" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="|"></TextView>
+
+        <Button
+            android:id="@+id/findPW"
+            android:layout_width="103dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:text="비밀번호 찾기" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="|"></TextView>
+
+        <Button
+            android:id="@+id/privacy"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:text="개인정보 처리방침" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

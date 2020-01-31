@@ -2,7 +2,9 @@ package guitar.academyservice;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.animation.ObjectAnimator;
 import android.content.ContentValues;
@@ -58,6 +60,7 @@ import java.util.TimerTask;
 
 public class DriveActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final int END_DRIVE_CODE = 1;
+    public static final int STUDENT_INFO_CODE = 2;
     public static final int END_DIRVE_TASK = 10;
     public static final int SEND_LOCATION_TASK = 20;
     public static final int POOL_STUDENT_LOCATION_TASK = 30;
@@ -87,6 +90,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     Marker myLocationMarker;
     ProgressBar progressBar;
     Button drawerButton;
+    Button backButton;
     TextView courseTitle;
     View listFrame;
     PointListFragment pointListFragment;
@@ -97,6 +101,8 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     Timer poolGPSLocationTimer;
     private static final int SEND_LOCATION_TIME = 10000;
     Timer sendMyLocationTimer;
+    int curPointIdx;
+    int curStudentIdx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,16 +121,34 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         tMapUtil = new TMapUtil(this);
         busicon = BitmapFactory.decodeResource(this.getResources(), R.drawable.busicon);
 
+        backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                boolean check = true;
+                for(int i = 0; i < pointList.size(); i++){
+                    if(pointList.get(i).check == false){
+                        check = false;
+                    }
+                }
+                if(check == true){
+                    endDrive();
+                }
+                else{
+                    endDriveError();
+                }
+            }
+        });
+
         drawerButton = findViewById(R.id.drawer);
         listFrame = findViewById(R.id.list_frame);
-
         class DrawerClickListener implements Button.OnClickListener{
             boolean toggle;
             @Override
             public void onClick(View v) {
                 Log.d("draw_test", "flag = " + toggle);
                 if(toggle == false) {
-                    ObjectAnimator anim = ObjectAnimator.ofFloat(listFrame, "translationY", -1200f);
+                    ObjectAnimator anim = ObjectAnimator.ofFloat(listFrame, "translationY", -1100f);
                     anim.setDuration(500);
                     anim.start();
                 }
@@ -208,9 +232,15 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public void studentPopup(int index){
+        Intent intent = new Intent(DriveActivity.this, StudentInfoActivity.class);
+        intent.putExtra("student", studentList.get(index));
+        startActivityForResult(intent, STUDENT_INFO_CODE);
+    }
+
+    public void requestStudentLocation(){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("stdntNo", studentList.get(index).id);
-        NetworkTask requestStudentLocation = new NetworkTask(studentURL, contentValues, index, POOL_STUDENT_LOCATION_TASK);
+        contentValues.put("stdntNo", studentList.get(curStudentIdx).id);
+        NetworkTask requestStudentLocation = new NetworkTask(studentURL, contentValues, POOL_STUDENT_LOCATION_TASK);
         requestStudentLocation.execute();
     }
 
@@ -279,10 +309,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
                 case SEND_LOCATION_TASK:
                     break;
                 case POOL_STUDENT_LOCATION_TASK:
-                    parseStudentInfo(o.toString(), point_index);
-                    intent = new Intent(DriveActivity.this, StudentInfoActivity.class);
-                    intent.putExtra("student", studentList.get(point_index));
-                    startActivity(intent);
+                    parseStudentInfo(o.toString());
                     break;
             }
             //Todo after httpNetworking.
@@ -300,14 +327,11 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public void chanceFragment(int index){
+        curPointIdx = index;
         studentList = pointList.get(index).studentList;
         Log.d("drive_test", "selected_point = " + pointNameList.get(index));
         studentNameList = new ArrayList<>();
-        for(int i = 0; i < studentList.size(); i++){
-            studentNameList.add(studentList.get(i).name);
-        }
-        Log.d("drive_test", "studentlist size = " + studentList.size());
-        studentListFragment = new StudentListFragment(studentNameList, index);
+        studentListFragment = new StudentListFragment(studentList);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, studentListFragment).commit();
     }
 
@@ -327,6 +351,12 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
                     contentValues.put("routeNo", course.id);
                     NetworkTask requestEndDrive = new NetworkTask(endDriveURL, contentValues, END_DIRVE_TASK);
                     requestEndDrive.execute();
+                }
+                break;
+            case STUDENT_INFO_CODE:
+                if(resultCode != RESULT_CANCELED){
+                    drawerButton.callOnClick();
+                    requestStudentLocation();
                 }
                 break;
         }
@@ -377,34 +407,35 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    public void parseStudentInfo(String result, int index){
+    public void parseStudentInfo(String result){
         Log.d("drive_test", "location result = " + result);
+        Double latitude;
+        Double longitude;
         try{
             JSONObject jsonObject = new JSONObject(result);
             JSONObject location = jsonObject.getJSONObject("location");
-            studentList.get(index).latitude = location.getDouble("latitude");
-            studentList.get(index).longitude = location.getDouble("longitude");
+            latitude = location.getDouble("latitude");
+            longitude = location.getDouble("longitude");
         }
         catch(JSONException e){
             e.printStackTrace();
-            studentList.get(index).latitude = 37.494870;
-            studentList.get(index).longitude = 126.960763;
+            latitude = 37.494870;
+            longitude = 126.960763;
         }
 
         if(studentMarkerOption == null){
             studentMarkerOption = new MarkerOptions();
-            studentMarkerOption.position(new LatLng(studentList.get(index).latitude, studentList.get(index).longitude));
-            studentMarkerOption.title(studentList.get(index).name);
+            studentMarkerOption.position(new LatLng(latitude, longitude));
 
             studentMarker = mMap.addMarker(studentMarkerOption);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(studentList.get(index).latitude, studentList.get(index).longitude)));
+            studentMarker.setTitle(studentList.get(curStudentIdx).name);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         }
         else {
-            studentMarker.setPosition(new LatLng(studentList.get(index).latitude, studentList.get(index).longitude));
-            studentMarkerOption.title(studentList.get(index).name);
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(studentList.get(index).latitude, studentList.get(index).longitude)));
+            studentMarker.setPosition(new LatLng(latitude, longitude));
+            studentMarker.setTitle(studentList.get(curStudentIdx).name);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         }
     }
