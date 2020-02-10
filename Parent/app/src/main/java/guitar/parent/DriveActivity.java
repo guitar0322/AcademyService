@@ -3,8 +3,6 @@ package guitar.parent;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PointF;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +11,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,13 +20,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,16 +55,15 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drive);
 
-        refreshURL = getString(R.string.url) + "parent/drive?";
+        refreshURL = getString(R.string.url) + "parent/tracking?";
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
         student = (Student) intent.getSerializableExtra("student");
         contentValues = new ContentValues();
-        contentValues.put("academy", student.academyPhone);
-        contentValues.put("course", student.courseName);
-        contentValues.put("student", student.phone);
+        contentValues.put("busNo", student.busID);
+        contentValues.put("stdntNo",student.tracking_id);
 
         studentName = findViewById(R.id.studentName);
         studentName.setText(student.name);
@@ -208,12 +200,15 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         else{
             studentMarker.setPosition(new LatLng(student.studentLatitude, student.studentLongitude));
         }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(driverMarker.getPosition()));
+
     }
 
     public void parseDriveInfo(String jsonString){
+        Log.d("driver_test", "drive info = " + jsonString);
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
-            JSONObject driverInfo = jsonObject.getJSONObject("driver");
+            JSONObject driverInfo = jsonObject.getJSONObject("bus");
             JSONObject studentInfo = jsonObject.getJSONObject("student");
 
             student.driverLatitude = driverInfo.getDouble("latitude");
@@ -221,7 +216,6 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             student.studentLatitude = studentInfo.getDouble("latitude");
             student.studentLongitude = studentInfo.getDouble("longitude");
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
-            student.arriveTime = simpleDateFormat.parse(driverInfo.getString("arrive"));
         }
         catch(Exception e){
             e.printStackTrace();

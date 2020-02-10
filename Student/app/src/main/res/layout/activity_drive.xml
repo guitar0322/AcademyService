@@ -12,7 +12,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,66 +27,5 @@
         app:layout_constraintEnd_toEndOf="@+id/googleMap">
 
     </Button>
-
-    <LinearLayout
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:orientation="vertical"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/googleMap">
-
-        <TextView
-            android:id="@+id/academyName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="30dp">
-
-        </TextView>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/driverName"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="홍홍홍"
-                android:textSize="30dp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/driverPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:layout_marginLeft="12dp"
-                android:gravity="center"
-                android:text="01099999999"
-                android:textSize="30dp">
-
-            </TextView>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/arriveTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="20dp">
-
-        </TextView>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

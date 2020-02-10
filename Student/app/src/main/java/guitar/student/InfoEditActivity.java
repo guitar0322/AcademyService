@@ -42,7 +42,7 @@ public class InfoEditActivity extends AppCompatActivity {
                 password2 = passwordEdit2.getText().toString();
                 if (checkPassword() == true) {
                     ContentValues contentValues = new ContentValues();
-                    contentValues.put("username", username);
+                    contentValues.put("tel", username);
                     contentValues.put("password", password2);
                     RequestInfoEdit requestInfoEdit = new RequestInfoEdit(infoEditUrl, contentValues);
                     requestInfoEdit.execute();

@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class Student implements Serializable {
     int id;
+    int tracking_id;
     String name;
     String phone;
     boolean block;
@@ -22,11 +23,13 @@ public class Student implements Serializable {
     int courseID;
     String courseName;
     boolean status;
+    int busID;
 
-    public Student(int id, String name, String phone, String block,
+    public Student(int id, int tracking_id, String name, String phone, String block,
                    String academyName, String academyPhone,
                    int courseID, String courseName,
-                   int driverID, String driverName, String driverPhone, String status ){
+                   int driverID, String driverName, String driverPhone, String status, int busID ){
+        this.tracking_id = tracking_id;
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -48,5 +51,6 @@ public class Student implements Serializable {
             this.status = true;
         else
             this.status = false;
+        this.busID = busID;
     }
 }

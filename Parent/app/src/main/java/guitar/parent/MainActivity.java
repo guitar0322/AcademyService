@@ -24,16 +24,24 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     static final int APP_QUIT_CODE = 1;
     static final int LOGOUT_CODE = 2;
     static final int BLOCK_CODE = 3;
 
+    static final int BLOCK_TASK_CODE = 100;
+    static final int DRIVE_TASK_CODE = 200;
+
     String blockURL;
+    String driveURL;
     ArrayList<Student> studentList;
     Student selectedStudent;
     Switch selectedSwitch;
@@ -49,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         blockURL = getString(R.string.url) + "parent/block?";
+        driveURL = getString(R.string.url) + "parent/drive?";
         Intent intent = getIntent();
         username = getSharedPreferences("UserInfo", MODE_PRIVATE).getString("username", "");
         if (studentList == null) {
@@ -80,10 +89,19 @@ public class MainActivity extends AppCompatActivity {
     public void openDriveInfo(int position){
         selectedStudent = studentList.get(position);
         Intent intent;
-        if (selectedStudent.status == true) {
-            intent = new Intent(MainActivity.this, DriveActivity.class);
-            intent.putExtra("student", selectedStudent);
+        if(selectedStudent.courseName.equals("")){
+            intent = new Intent(MainActivity.this, PopupActivity.class);
+            intent.putExtra("guide", "운행정보 없음 학원에 문의 바랍니다.");
             startActivity(intent);
+        }
+        else if (selectedStudent.status == true) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("aTel", selectedStudent.academyPhone);
+            if(selectedStudent.courseID != 0)
+                contentValues.put("rNumber", selectedStudent.courseID);
+            contentValues.put("sNumber", selectedStudent.id);
+            NetworkTask requestDriveInfo = new NetworkTask(driveURL, contentValues, DRIVE_TASK_CODE);
+            requestDriveInfo.execute();
         } else {
             intent = new Intent(MainActivity.this, PopupActivity.class);
             intent.putExtra("guide", "운행중이 아닙니다");
@@ -146,28 +164,26 @@ public class MainActivity extends AppCompatActivity {
             case BLOCK_CODE:
                 if(resultCode == RESULT_OK){
                     ContentValues contentValues = new ContentValues();
-                    contentValues.put("stdntNo", selectedStudent.id);
+                    contentValues.put("stdntNo", selectedStudent.tracking_id);
                     if(selectedStudent.block == true)
                         contentValues.put("status", "N");
                     else
                         contentValues.put("status", "Y");
-                    RequestBlockTask requestBlockTask = new RequestBlockTask(blockURL, contentValues);
+                    NetworkTask requestBlockTask = new NetworkTask(blockURL, contentValues, BLOCK_TASK_CODE);
                     requestBlockTask.execute();
-                    selectedStudent.block = !selectedStudent.block;
-                }
-                else{
-                    selectedSwitch.toggle();
                 }
         }
     }
 
-    public class RequestBlockTask extends AsyncTask {
+    public class NetworkTask extends AsyncTask {
         private String url;
         private ContentValues values;
+        private int task_code;
 
-        public RequestBlockTask(String url, ContentValues values){
+        public NetworkTask(String url, ContentValues values, int task_code){
             this.url = url;
             this.values = values;
+            this.task_code = task_code;
         }
         @Override
         protected void onPreExecute(){
@@ -188,6 +204,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
+            switch (task_code){
+                case BLOCK_TASK_CODE:
+                    selectedStudent.block = !selectedStudent.block;
+                    selectedSwitch.toggle();
+                    break;
+                case DRIVE_TASK_CODE:
+                    parseDriveInfo(o.toString());
+                    break;
+            }
             progressBar.setVisibility(View.GONE);
 
             //Todo after httpNetworking.
@@ -195,4 +220,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void parseDriveInfo(String result){
+        JSONObject jsonResult;
+        try{
+            jsonResult = new JSONObject(result);
+            if(jsonResult.getString("status").equals("ACCEPT")){
+                JSONObject driverInfo = jsonResult.getJSONObject("driver");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
+                selectedStudent.arriveTime = simpleDateFormat.parse(driverInfo.getString("arrive"));
+                JSONObject studentInfo = jsonResult.getJSONObject("student");
+                if(studentInfo.getString("status").equals("REJECT") == false){
+
+                }
+            }
+            else if(jsonResult.getString("status").equals("REJECT")){
+                Intent intent = new Intent(this, PopupActivity.class);
+                intent.putExtra("guide", "자녀 위치정보 열람동의가 필요합니다 자녀의 핸드폰에서 동의를 완료해주세요");
+                startActivity(intent);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
+            try {
+                selectedStudent.arriveTime = simpleDateFormat.parse("20200203120000");
+            }
+            catch (Exception exception){
+                exception.printStackTrace();
+            }
+        }
+        Intent intent = new Intent(this, DriveActivity.class);
+        intent.putExtra("student", selectedStudent);
+        startActivity(intent);
+    }
 }

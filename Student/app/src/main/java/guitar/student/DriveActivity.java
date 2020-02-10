@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -32,8 +33,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     private static final int END_DRIVE_CODE = 1;
     private static final int SEND_LOCATION_TASK = 10;
     private static final int POOL_DRIVE_INFO_TASK = 20;
-    String username;
-    String refreshURL;
+    String trackingURL;
     String locationURL;
     Academy academy;
 
@@ -59,32 +59,37 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drive);
 
-        refreshURL = getString(R.string.url) + "student/drive?";
-        locationURL = getString(R.string.url) + "student/location?";
+        trackingURL = getString(R.string.url) + "stdnt/tracking?";
+        locationURL = getString(R.string.url) + "stdnt/location?";
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
         academy = (Academy) intent.getSerializableExtra("academy");
-        username = intent.getStringExtra("username");
-        initAcademyInfo();
 
+        if(academy.arriveTime == null){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+            try {
+                academy.arriveTime = simpleDateFormat.parse("2020-02-03 11:00:00");
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         contentValues = new ContentValues();
-        contentValues.put("academy", academy.phone);
-        contentValues.put("course", academy.courseName);
-        contentValues.put("student", username);
+        contentValues.put("busNo", academy.busID);
 
         gpsManager = new GPSManager(this);
 
-        NetworkTask requestInitDriveInfo = new NetworkTask(refreshURL, contentValues, POOL_DRIVE_INFO_TASK);
+        NetworkTask requestInitDriveInfo = new NetworkTask(trackingURL, contentValues, POOL_DRIVE_INFO_TASK);
         requestInitDriveInfo.execute();
 
         refreshButton = findViewById(R.id.refresh);
         refreshButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){
-                NetworkTask requestRefresh = new NetworkTask(refreshURL, contentValues, POOL_DRIVE_INFO_TASK);
+                NetworkTask requestRefresh = new NetworkTask(trackingURL, contentValues, POOL_DRIVE_INFO_TASK);
                 requestRefresh.execute();
             }
         });
@@ -97,11 +102,11 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
                     public void run() {
                         gpsManager.getLocation();
                         ContentValues myLocationValues = new ContentValues();
-                        myLocationValues.put("username", username);
+                        myLocationValues.put("stdntNo", UserInfo.instance.id);
                         myLocationValues.put("latitude", gpsManager.getLatitude());
                         myLocationValues.put("longitude", gpsManager.getLongitude());
 
-                        NetworkTask poolDriveInfo = new NetworkTask(refreshURL, contentValues, POOL_DRIVE_INFO_TASK);
+                        NetworkTask poolDriveInfo = new NetworkTask(trackingURL, contentValues, POOL_DRIVE_INFO_TASK);
                         poolDriveInfo.execute();
                         NetworkTask sendLocation = new NetworkTask(locationURL, myLocationValues, SEND_LOCATION_TASK);
                         sendLocation.execute();
@@ -133,17 +138,6 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    public void initAcademyInfo(){
-        academyNameView = findViewById(R.id.academyName);
-        driverNameView = findViewById(R.id.driverName);
-        driverPhoneView = findViewById(R.id.driverPhone);
-        arriveTimeView = findViewById(R.id.arriveTime);
-
-        academyNameView.setText(academy.name);
-        driverNameView.setText(academy.driverName);
-        driverPhoneView.setText(academy.driverPhone);
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -160,6 +154,9 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         mMap.moveCamera(CameraUpdateFactory.newLatLng(seoul));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
 
+        View infoWindow = getLayoutInflater().inflate(R.layout.activity_drive_info, null);
+        DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, academy);
+        mMap.setInfoWindowAdapter(driverInfoAdapter);
 //        Polyline polyline = mMap.addPolyline((new PolylineOptions()).clickable(true).addAll(pathPointList));
 //        polyline.setTag("firstpath");
     }
@@ -181,7 +178,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             HttpClient httpClient = new HttpClient();
             result = httpClient.request(url, values);
             if (result == "" || result == null) {
-                result = "course activity networking test result";
+                result = "student drive activity networking error";
             }
             return result;
         }
@@ -214,19 +211,11 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
 
     public void parseDriveInfo(String jsonString){
         try {
-            JSONObject jsonObject = new JSONObject(jsonString);
-            JSONObject driverInfo = jsonObject.getJSONObject("driver");
+            JSONObject driverInfo = new JSONObject(jsonString);
 
-            academy.driverLatitude = driverInfo.getDouble("latitude");
-            academy.driverLongitude = driverInfo.getDouble("longitude");
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
-            academy.arriveTime = simpleDateFormat.parse(driverInfo.getString("arrive"));
+            academy.driverLatitude = driverInfo.getDouble("x");
+            academy.driverLongitude = driverInfo.getDouble("y");
             googleMapUpdate();
-            if(academy.arriveTime != null)
-                arriveTimeView.setText(academy.arriveTime.toString());
-            else{
-                arriveTimeView.setText("10분후 도착합니다.");
-            }
         }
         catch(Exception e){
             e.printStackTrace();

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,13 +21,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     static final int APP_QUIT_CODE = 1;
     static final int LOGOUT_CODE = 2;
 
+    String driveURL;
     ArrayList<Academy> academyList;
     Academy selectedAcademy;
 
@@ -36,13 +44,16 @@ public class MainActivity extends AppCompatActivity {
     ActionBar actionBar;
     ListView academyListView;
 
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        driveURL = getString(R.string.url) + "stdnt/driveDetail?";
         Intent intent = getIntent();
-        username = getSharedPreferences("AutoLogin", MODE_PRIVATE).getString("username", "");
+        username = UserInfo.instance.phone;
         if(academyList == null){
             academyList = (ArrayList<Academy>)intent.getSerializableExtra("academy");
             Log.d("main_test", "academyList size is " + academyList.size());
@@ -80,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -123,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case LOGOUT_CODE:
                 if(resultCode == RESULT_OK){
-                    SharedPreferences preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);;
+                    SharedPreferences preferences = getSharedPreferences("AutoLogin", MODE_PRIVATE);;
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("username", "");
                     editor.putString("password","");
@@ -133,6 +146,54 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
                 break;
+        }
+    }
+    public class RequestDrive extends AsyncTask {
+        private String url;
+        private ContentValues values;
+
+        public RequestDrive(String url, ContentValues values){
+            this.url = url;
+            this.values = values;
+        }
+        @Override
+        protected void onPreExecute(){
+            progressBar = findViewById(R.id.loading);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            String result;
+            HttpClient httpClient = new HttpClient();
+            result = httpClient.request(url, values);
+            if(result == "" || result == null){
+                result = "testresult";
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            Log.d("login_test", "login success");
+
+            progressBar.setVisibility(View.GONE);
+            parseDriveInfo(o.toString());
+            //Todo after httpNetworking.
+            //ex)Intent, terminate progress, courselist setting
+        }
+    }
+    public void parseDriveInfo(String result){
+        JSONObject resultJson = null;
+        try{
+            resultJson = new JSONObject(result);
+            if(resultJson.getString("status").equals("ACCEPT")){
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                selectedAcademy.arriveTime = simpleDateFormat.parse(resultJson.getString("arrive"));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 

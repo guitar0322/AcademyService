@@ -181,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void parseCourseList(String result) {
+        Log.d("main_test", "point result : " + result);
         try {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray pointJsonArray = jsonObject.getJSONArray("point");

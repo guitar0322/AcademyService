@@ -47,6 +47,7 @@
                 android:background="@drawable/login_editor"
                 android:hint="연락처11자리"
                 android:padding="12dp"
+                android:inputType="phone"
                 android:selectAllOnFocus="true" />
 
             <TextView

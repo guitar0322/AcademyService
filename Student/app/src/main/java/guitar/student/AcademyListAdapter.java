@@ -22,7 +22,7 @@ public class AcademyListAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 0;
+        return academyList.size();
     }
 
     @Override

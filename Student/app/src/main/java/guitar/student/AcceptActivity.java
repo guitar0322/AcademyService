@@ -18,12 +18,11 @@ public class AcceptActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accept);
 
-        acceptURL = getString(R.string.url) + "driver/auth?";
+        acceptURL = getString(R.string.url) + "stdnt/agree?";
         Intent intent = new Intent(this, ChoicePopupActivity.class);
         contentValues = new ContentValues();
-        contentValues.put("drvNo", UserInfo.instance.id);
-        contentValues.put("acaNo", intent.getStringExtra("acaNo"));
-        intent.putExtra("guide", intent.getStringExtra("name") + " " + intent.getStringExtra("acaSub")+ "에서의 등록요청입니다. 동의하시겠습니까?");
+        contentValues.put("stdntNo", getIntent().getIntExtra("studentID", 0));
+        intent.putExtra("guide", getIntent().getStringExtra("name") + "님의 위치정보 열람에 동의하시겠습니까?");
         startActivityForResult(intent, 1);
     }
 

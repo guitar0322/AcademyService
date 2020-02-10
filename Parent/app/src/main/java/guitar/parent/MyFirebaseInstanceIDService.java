@@ -15,6 +15,8 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONArray;
+
 public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String s){
@@ -35,16 +37,35 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
 
     private void sendNotification(RemoteMessage remoteMessage){
         String title = remoteMessage.getData().get("title");
-        String message = remoteMessage.getData().get("message");
+        String body = remoteMessage.getData().get("body");
+        String message;
+        String studentName=null;
+        String academyName=null;
+        String status=null;
 
+
+        try{
+            JSONArray jsonArray = new JSONArray(body);
+            studentName = jsonArray.getJSONObject(0).getString("stdntName");
+            academyName = jsonArray.getJSONObject(0).getString("acaName");
+            if(jsonArray.getJSONObject(0).getString("gubun").equals("load")){
+                status = "차량에 탑승";
+            }
+            else if(jsonArray.getJSONObject(0).getString("gubun").equals("unload")){
+                status = "차량에서 하차";
+            }
+            else{
+                status = "에 도착";
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        message = studentName + "님이" + academyName + status + "하였습니다";
         Log.d("firebase_test", "From = " + remoteMessage.getFrom());
         Log.d("firebase_test", "Message data payload = " + remoteMessage.getData());
 
-        Intent intent = new Intent(this, AcceptActivity.class);
-//        intent.putExtra("code", 1);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         /**
          * 오레오 버전부터는 Notification Channel이 없으면 푸시가 생성되지 않는 현상이 있습니다.
          * **/
@@ -70,8 +91,7 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
                             .setContentText(message)
                             .setChannelId(channel)
                             .setAutoCancel(true)
-                            .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                            .setContentIntent(pendingIntent);
+                            .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -85,14 +105,12 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
                             .setContentTitle(title)
                             .setContentText(message)
                             .setAutoCancel(true)
-                            .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                            .setContentIntent(pendingIntent);
+                            .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
             notificationManager.notify(0, notificationBuilder.build());
-
         }
     }
 }

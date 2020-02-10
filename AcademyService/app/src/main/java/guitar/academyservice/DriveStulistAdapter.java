@@ -47,6 +47,7 @@ public class DriveStulistAdapter extends BaseAdapter {
         studentName.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                Log.d("student_test", "student_position = " + position);
                 Intent intent = new Intent(context, StudentInfoActivity.class);
                 intent.putExtra("student", stulist.get(position));
                 intent.putExtra("index", position);

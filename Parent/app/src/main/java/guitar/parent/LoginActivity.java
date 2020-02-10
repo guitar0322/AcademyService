@@ -274,30 +274,39 @@ public class LoginActivity extends AppCompatActivity {
                 for (int i = 0; i < studentJsonArray.length(); i++) {
                     JSONObject studentInfo = studentJsonArray.getJSONObject(i);
                     studentList = new ArrayList<>();
-                    studentList.add(new Student(studentInfo.getInt("sNumber"), studentInfo.getString("sName"), studentInfo.getString("sTel"), studentInfo.getString("sStatus"),
+                    studentList.add(new Student(studentInfo.getInt("sNumber"), studentInfo.getInt("stdntNo"),
+                            studentInfo.getString("sName"), studentInfo.getString("sTel"), studentInfo.getString("sStatus"),
                             studentInfo.getString("aName"), studentInfo.getString("aTel"),
-                            studentInfo.getInt("rNumber"), studentInfo.getString("rName"),
-                            studentInfo.getInt("dNumber"), studentInfo.getString("dName"), studentInfo.getString("dTel"), studentInfo.getString("bStatus")));
+                            studentInfo.has("rNumber")?studentInfo.getInt("rNumber"):0,
+                            studentInfo.has("rName")?studentInfo.getString("rName"):"",
+                            studentInfo.has("dNumber")?studentInfo.getInt("dNumber"):0,
+                            studentInfo.has("dName")?studentInfo.getString("dName"):"",
+                            studentInfo.has("dTel")?studentInfo.getString("dTel"):"",
+                            studentInfo.has("bStatus")?studentInfo.getString("bStatus"):"",
+                            studentInfo.has("bNumber")?studentInfo.getInt("bNumber"):0));
                 }
             }
         }
         catch(JSONException e){
             e.printStackTrace();
             studentList = new ArrayList<>();
-            studentList.add(new Student(1,"김동현", "01012345678",  "N",
+            studentList.add(new Student(1,0,"김동현",
+                    "01012345678",  "N",
                     "수학학원", "01044444444",
                     1,"동작구일대 월화",
-                    1,"이기사", "01011111111","Y"));
+                    1,"이기사", "01011111111","Y", 0));
 
-            studentList.add(new Student(1,"김동현", "01012345678",  "N",
+            studentList.add(new Student(1,0,"김동현",
+                    "01012345678",  "N",
                     "영어학원", "01055555555",
                     1, "동작아파트 수목",
-                    2,"김기사", "01022222222","N"));
+                    2,"김기사", "01022222222","N",0));
 
-            studentList.add(new Student(2,"김동찬","01023456789",   "N",
+            studentList.add(new Student(2,0,"김동찬",
+                    "01023456789",   "N",
                     "수학학원", "01066666666",
                     1,"동작초등학교정문 월화",
-                    3,"최기사", "01033333333", "N"));
+                    3,"최기사", "01033333333", "N",0));
         }
         editInfo();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);

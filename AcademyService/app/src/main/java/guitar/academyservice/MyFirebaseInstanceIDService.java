@@ -45,29 +45,38 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
         String message;
-        String acaName= null;
-        String acaSub = null;
+        String acaName= "";
+        String acaSub = "";
         int acaNo = 0;
-        try{
-            JSONArray jsonArray = new JSONArray(body);
-            acaName = jsonArray.getJSONObject(0).getString("name");
-            acaSub = jsonArray.getJSONObject(0).getString("subName");
-            acaNo = jsonArray.getJSONObject(0).getInt("acaNo");
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-
-        message = acaName + " " + acaSub + "의 등록요청이 도착 하였습니다";
+        int drvNo = 0;
 
         Log.d("firebase_test", "result = " + acaName + acaSub + acaNo);
         Log.d("firebase_test", "From = " + remoteMessage.getFrom());
         Log.d("firebase_test", "Message data payload = " + remoteMessage.getData());
 
+        try{
+            JSONArray jsonArray = new JSONArray(body);
+            acaName = jsonArray.getJSONObject(0).getString("name");
+            if(jsonArray.getJSONObject(0).getString("subName").equals("NULL"))
+                acaSub = "";
+            acaNo = jsonArray.getJSONObject(0).getInt("acaNo");
+            drvNo = jsonArray.getJSONObject(0).getInt("drvNo");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        if(acaSub.equals(""))
+            message = acaName + "의 등록요청이 도착 하였습니다";
+        else
+            message = acaName + " " + acaSub + "의 등록요청이 도착 하였습니다";
+
         Intent intent = new Intent(this, AcceptActivity.class);
         intent.putExtra("name", acaName);
         intent.putExtra("acaSub", acaSub);
         intent.putExtra("acaNo", acaNo);
+        intent.putExtra("drvNo", drvNo);
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -1,33 +1,20 @@
 package guitar.academyservice;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.animation.ObjectAnimator;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PointF;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,23 +25,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.skt.Tmap.TMapData;
-import com.skt.Tmap.TMapMarkerItem;
-import com.skt.Tmap.TMapPOIItem;
 import com.skt.Tmap.TMapPoint;
-import com.skt.Tmap.TMapPolyLine;
-import com.skt.Tmap.TMapView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -103,6 +79,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     Timer sendMyLocationTimer;
     int curPointIdx;
     int curStudentIdx;
+    int checkStudentNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,28 +90,27 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
 
         username = getSharedPreferences("UserInfo", MODE_PRIVATE).getString("username", "");
-        studentURL = getString(R.string.url) + "drivers/student?";
-        checkpointURL = getString(R.string.url) + "drivers/checkpoint?";
-        locationURL = getString(R.string.url) + "drivers/location?";
-        endDriveURL = getString(R.string.url) + "drivers/endDrive?";
+        studentURL = getString(R.string.url) + "driver/stdnt?";
+        checkpointURL = getString(R.string.url) + "driver/checkpoint?";
+        locationURL = getString(R.string.url) + "driver/location?";
+        endDriveURL = getString(R.string.url) + "driver/endDrive?";
 
         tMapUtil = new TMapUtil(this);
         busicon = BitmapFactory.decodeResource(this.getResources(), R.drawable.busicon);
 
         backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new Button.OnClickListener(){
+        backButton.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 boolean check = true;
-                for(int i = 0; i < pointList.size(); i++){
-                    if(pointList.get(i).check == false){
+                for (int i = 0; i < pointList.size(); i++) {
+                    if (pointList.get(i).check == false) {
                         check = false;
                     }
                 }
-                if(check == true){
+                if (check == true) {
                     endDrive();
-                }
-                else{
+                } else {
                     endDriveError();
                 }
             }
@@ -142,17 +118,17 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
 
         drawerButton = findViewById(R.id.drawer);
         listFrame = findViewById(R.id.list_frame);
-        class DrawerClickListener implements Button.OnClickListener{
+        class DrawerClickListener implements Button.OnClickListener {
             boolean toggle;
+
             @Override
             public void onClick(View v) {
                 Log.d("draw_test", "flag = " + toggle);
-                if(toggle == false) {
+                if (toggle == false) {
                     ObjectAnimator anim = ObjectAnimator.ofFloat(listFrame, "translationY", -1100f);
                     anim.setDuration(500);
                     anim.start();
-                }
-                else{
+                } else {
                     ObjectAnimator anim = ObjectAnimator.ofFloat(listFrame, "translationY", 0);
                     anim.setDuration(500);
                     anim.start();
@@ -163,20 +139,19 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         drawerButton.setOnClickListener(new DrawerClickListener());
 
         gpsManager = new GPSManager(this);
-        TimerTask poolGPSLocationTask = new TimerTask(){
+        TimerTask poolGPSLocationTask = new TimerTask() {
             @Override
-            public void run(){
+            public void run() {
                 DriveActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         gpsManager.getLocation();
-                        if(mMap != null){
-                            if(myLocationMarker == null) {
+                        if (mMap != null) {
+                            if (myLocationMarker == null) {
                                 locationMarkerOption = new MarkerOptions();
                                 locationMarkerOption.position(new LatLng(gpsManager.getLatitude(), gpsManager.getLongitude()));
                                 myLocationMarker = mMap.addMarker(locationMarkerOption);
-                            }
-                            else{
+                            } else {
                                 myLocationMarker.setPosition(new LatLng(gpsManager.getLatitude(), gpsManager.getLongitude()));
                                 Log.d("location_test", "location = " + gpsManager.getLatitude() + " , " + gpsManager.getLongitude());
                             }
@@ -184,6 +159,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
 //                        Toast.makeText(DriveActivity.this, gpsManager.getLatitude() + "," + gpsManager.getLongitude(), Toast.LENGTH_SHORT).show();순서에 따라
                     }
                 });
+
             }
         };
         poolGPSLocationTimer = new Timer();
@@ -192,7 +168,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void run() {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("drvNo", UserInfo.instance.id);
+                contentValues.put("busNo", course.busID);
                 contentValues.put("latitude", gpsManager.getLatitude());
                 contentValues.put("longitude", gpsManager.getLongitude());
                 NetworkTask sendLocationTask = new NetworkTask(locationURL, contentValues, SEND_LOCATION_TASK);
@@ -203,7 +179,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         sendMyLocationTimer = new Timer();
 
         Intent intent = getIntent();
-        course = (Course)intent.getSerializableExtra("course");
+        course = (Course) intent.getSerializableExtra("course");
         courseTitle = findViewById(R.id.courseName);
         courseTitle.setText(course.name);
         initPointList();
@@ -216,40 +192,56 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         boolean check = true;
-        for(int i = 0; i < pointList.size(); i++){
-            if(pointList.get(i).check == false){
+        for (int i = 0; i < pointList.size(); i++) {
+            if (pointList.get(i).check == false) {
                 check = false;
             }
         }
-        if(check == true){
+        if (check == true) {
             endDrive();
-        }
-        else{
+        } else {
             endDriveError();
         }
     }
 
-    public void studentPopup(int index){
+    public void studentPopup(int index) {
         Intent intent = new Intent(DriveActivity.this, StudentInfoActivity.class);
         intent.putExtra("student", studentList.get(index));
         startActivityForResult(intent, STUDENT_INFO_CODE);
     }
 
-    public void requestStudentLocation(){
+    public void requestStudentLocation() {
         ContentValues contentValues = new ContentValues();
         contentValues.put("stdntNo", studentList.get(curStudentIdx).id);
         NetworkTask requestStudentLocation = new NetworkTask(studentURL, contentValues, POOL_STUDENT_LOCATION_TASK);
         requestStudentLocation.execute();
     }
 
-    public void requestCheckPoint(int index){
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("routeNo", course.id);
-        contentValues.put("busDetailNo", pointList.get(index).id);
-        NetworkTask requestCheckPointTask = new NetworkTask(checkpointURL, contentValues, index, CHECK_POINT_TASK);
-        requestCheckPointTask.execute();
+    public void requestCheckPoint(int index) {
+        for (int i = 0; i < studentList.size(); i++) {
+            if (studentList.get(i).check == true) {
+                checkStudentNum++;
+            }
+        }
+
+        if (checkStudentNum == 0) {
+            pointList.get(index).check = true;
+            Intent intent = new Intent(DriveActivity.this, PopupActivity.class);
+            intent.putExtra("guide", "경유지 체크 완료");
+            startActivity(intent);
+
+        }
+        for (int i = 0; i < studentList.size(); i++) {
+            if (studentList.get(i).check == true) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("routeNo", course.id);
+                contentValues.put("stdntNo", studentList.get(i).id);
+                NetworkTask requestCheckPointTask = new NetworkTask(checkpointURL, contentValues, index, CHECK_POINT_TASK);
+                requestCheckPointTask.execute();
+            }
+        }
     }
 
     public class NetworkTask extends AsyncTask {
@@ -265,17 +257,19 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             this.task = taskCode;
         }
 
-        public NetworkTask(String url, ContentValues values, int taskCode){
+        public NetworkTask(String url, ContentValues values, int taskCode) {
             this.url = url;
             this.values = values;
             this.task = taskCode;
         }
 
-//        @Override
-//        protected  void onPreExecute(){
-//            progressBar = findViewById(R.id.loading);
-//            progressBar.setVisibility(View.VISIBLE);
-//        }
+        @Override
+        protected void onPreExecute() {
+            if (task != SEND_LOCATION_TASK) {
+                progressBar = findViewById(R.id.loading);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        }
 
         @Override
         protected Object doInBackground(Object[] objects) {
@@ -283,7 +277,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             HttpClient httpClient = new HttpClient();
             result = httpClient.request(url, values);
             if (result == "" || result == null) {
-                result = "course activity networking test result";
+                result = "driver drive activity networking result is empty";
             }
             return result;
         }
@@ -292,8 +286,9 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         protected void onPostExecute(Object o) {
             Intent intent;
             super.onPostExecute(o);
-//            progressBar.setVisibility(View.GONE);
-            switch(task){
+            if (task != SEND_LOCATION_TASK)
+                progressBar.setVisibility(View.GONE);
+            switch (task) {
                 case END_DIRVE_TASK:
                     poolGPSLocationTimer.cancel();
                     sendMyLocationTimer.cancel();
@@ -301,10 +296,13 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
                     startActivity(intent);
                     break;
                 case CHECK_POINT_TASK:
-                    pointList.get(point_index).check = true;
-                    intent = new Intent(DriveActivity.this, PopupActivity.class);
-                    intent.putExtra("guide", "경유지 체크 완료");
-                    startActivity(intent);
+                    checkStudentNum--;
+                    if (checkStudentNum == 0) {
+                        pointList.get(point_index).check = true;
+                        intent = new Intent(DriveActivity.this, PopupActivity.class);
+                        intent.putExtra("guide", "경유지 체크 완료");
+                        startActivity(intent);
+                    }
                     break;
                 case SEND_LOCATION_TASK:
                     break;
@@ -317,16 +315,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    public void convertTmapToGoogle(){
-        pathPointList = new ArrayList<>();
-
-        for(int i = 0; i < tMapUtil.multiPathPolyLine.getLinePoint().size(); i++){
-            pathPointList.add(new LatLng(tMapUtil.multiPathPolyLine.getLinePoint().get(i).getLatitude(),
-                    tMapUtil.multiPathPolyLine.getLinePoint().get(i).getLongitude()));
-        }
-    }
-
-    public void chanceFragment(int index){
+    public void chanceFragment(int index) {
         curPointIdx = index;
         studentList = pointList.get(index).studentList;
         Log.d("drive_test", "selected_point = " + pointNameList.get(index));
@@ -335,7 +324,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         getSupportFragmentManager().beginTransaction().replace(R.id.container, studentListFragment).commit();
     }
 
-    public void pointCheckError(){
+    public void pointCheckError() {
         Intent intent = new Intent(DriveActivity.this, PopupActivity.class);
         intent.putExtra("guide", "이전 경유지가 완료되지 않았습니다.");
         startActivity(intent);
@@ -344,9 +333,9 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
+        switch (requestCode) {
             case END_DRIVE_CODE:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     ContentValues contentValues = new ContentValues();
                     contentValues.put("routeNo", course.id);
                     NetworkTask requestEndDrive = new NetworkTask(endDriveURL, contentValues, END_DIRVE_TASK);
@@ -354,7 +343,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
                 }
                 break;
             case STUDENT_INFO_CODE:
-                if(resultCode != RESULT_CANCELED){
+                if (resultCode != RESULT_CANCELED) {
                     drawerButton.callOnClick();
                     requestStudentLocation();
                 }
@@ -362,34 +351,34 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
-    public void endDrive(){
+    public void endDrive() {
         Intent intent = new Intent(DriveActivity.this, ChoicePopupActivity.class);
         intent.putExtra("guide", "운행을 종료하시겠습니까?");
         startActivityForResult(intent, END_DRIVE_CODE);
     }
 
-    public void endDriveError(){
+    public void endDriveError() {
         Intent intent = new Intent(DriveActivity.this, PopupActivity.class);
         intent.putExtra("guide", "모든 경유지를 체크하여야 운행 종료를 할 수 있습니다");
         startActivity(intent);
     }
 
-    public void changeStudentFragment(){
+    public void changeStudentFragment() {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, pointListFragment).commit();
     }
 
-    public void initPointList(){
+    public void initPointList() {
         pointList = course.pointList;
         pointNameList = new ArrayList<>();
-        for(int i = 0; i < pointList.size(); i++){
+        for (int i = 0; i < pointList.size(); i++) {
             pointNameList.add(pointList.get(i).name);
         }
     }
 
-    public void initTmapPoint(){
+    public void initTmapPoint() {
         TMapPoint soongsilStation;
         TMapPoint jinLeeHall;
-        TMapPoint  jomansikHall;
+        TMapPoint jomansikHall;
         wayPoints = new ArrayList<>();
         try {
             startPoint = tMapUtil.findTitlePOI("숭실대학교 정보과학관");
@@ -401,29 +390,34 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             wayPoints.add(soongsilStation);//종각역
             wayPoints.add(jinLeeHall);
             wayPoints.add(jomansikHall);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void parseStudentInfo(String result){
-        Log.d("drive_test", "location result = " + result);
-        Double latitude;
-        Double longitude;
-        try{
-            JSONObject jsonObject = new JSONObject(result);
-            JSONObject location = jsonObject.getJSONObject("location");
-            latitude = location.getDouble("latitude");
-            longitude = location.getDouble("longitude");
-        }
-        catch(JSONException e){
+    public void parseStudentInfo(String result) {
+        JSONObject resultJson;
+        Log.d("drive_test", "student location = " + result);
+        Double latitude = null;
+        Double longitude = null;
+        try {
+            resultJson = new JSONObject(result);
+            if (resultJson.getString("status").equals("REJECT") == true) {
+                Intent intent = new Intent(this, PopupActivity.class);
+                intent.putExtra("guide", "학생위치정보가 없습니다");
+                startActivity(intent);
+            } else {
+                JSONObject location = resultJson.getJSONObject("location");
+                latitude = location.getDouble("latitude");
+                longitude = location.getDouble("longitude");
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
             latitude = 37.494870;
             longitude = 126.960763;
         }
 
-        if(studentMarkerOption == null){
+        if (studentMarkerOption == null) {
             studentMarkerOption = new MarkerOptions();
             studentMarkerOption.position(new LatLng(latitude, longitude));
 
@@ -431,8 +425,7 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             studentMarker.setTitle(studentList.get(curStudentIdx).name);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        }
-        else {
+        } else {
             studentMarker.setPosition(new LatLng(latitude, longitude));
             studentMarker.setTitle(studentList.get(curStudentIdx).name);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
@@ -440,13 +433,29 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
+    public void convertTmapToGoogle() {
+        pathPointList = new ArrayList<>();
+
+        for (int i = 0; i < tMapUtil.multiPathPolyLine.getLinePoint().size(); i++) {
+            pathPointList.add(new LatLng(tMapUtil.multiPathPolyLine.getLinePoint().get(i).getLatitude(),
+                    tMapUtil.multiPathPolyLine.getLinePoint().get(i).getLongitude()));
+        }
+    }
+
+    public void addPolygonPath() {
+        pathPointList = new ArrayList<>();
+        for (int i = 0; i < course.pathlist.size(); i++) {
+            pathPointList.add(new LatLng(course.pathlist.get(i).latitude, course.pathlist.get(i).longitude));
+        }
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        initTmapPoint();//initialize waypoints
-        tMapUtil.addMultiPointPath(wayPoints);//request find path from waypoints.
-        convertTmapToGoogle();//TMapPoint를 GoogleMap의 LatLng로 변경.
-
+//        initTmapPoint();//initialize waypoints
+//        tMapUtil.addMultiPointPath(wayPoints);//request find path from waypoints.
+//        convertTmapToGoogle();//TMapPoint를 GoogleMap의 LatLng로 변경.
+        addPolygonPath();
 //        LatLng seoul = new LatLng(37.56, 126.97);
         LatLng seoul = pathPointList.get(0);
 

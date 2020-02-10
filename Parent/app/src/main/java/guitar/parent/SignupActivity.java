@@ -62,7 +62,7 @@ public class SignupActivity extends AppCompatActivity {
                     contentValues.put("username", username);
                     contentValues.put("password", password1);
                     contentValues.put("name", name);
-                    SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);;
+                    SharedPreferences preferences = getSharedPreferences("DeviceToken", MODE_PRIVATE);;
 
                     contentValues.put("token", preferences.getString("token", ""));
                     RequestSignup requestSignup = new RequestSignup(signupURL, contentValues);

@@ -139,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         ContentValues loginData = new ContentValues();
         loginData.put("username", username);
         loginData.put("password", password);
+        loginData.put("token", getSharedPreferences("DeviceToken", MODE_PRIVATE).getString("token", ""));
         RequestLoginTask requestLoginTask = new RequestLoginTask(loginUrl, loginData);
         requestLoginTask.execute();
     }
@@ -298,26 +299,34 @@ public class LoginActivity extends AppCompatActivity {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject courseInfo = jsonArray.getJSONObject(i);
                     courseList.add(new Course(courseInfo.getInt("routeNo"), courseInfo.getString("name"),
-                            courseInfo.getInt("acaNo"), courseInfo.getString("academy"), courseInfo.getString("number"), courseInfo.getString("address"), null));
-                    Log.d("json_test", "course name = " + courseInfo.getString("name"));
+                            courseInfo.getInt("acaNo"), courseInfo.getString("academy"),
+                            courseInfo.getString("number"), courseInfo.getString("address"), null, courseInfo.getInt("busNo")));
                 }
 
                 this.courseList = courseList;
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("course", courseList);
+                startActivity(intent);
+                finish();
             }
         }
         catch(JSONException e){
             e.printStackTrace();
             courseList = new ArrayList<>();
-            courseList.add(new Course(1, "숭실대학교 근처 월화", 1, "상도수학학원", "01011111111", "서울특별시 동작구 상도동 111-11",  new ArrayList<Point>()));
-            courseList.add(new Course(1, "상도동일대", 2, "상도태권도", "01022222222", "서울특별시 동작구 상도동 112-32",  new ArrayList<Point>()));
-            courseList.add(new Course(1, "동작아파트단지", 3, "동작수학학원", "01011111111", "서울특별시 동작구 상도동 111-11" ,  new ArrayList<Point>()));
+            courseList.add(new Course(1, "숭실대학교 근처 월화", 1, "상도수학학원",
+                    "01011111111", "서울특별시 동작구 상도동 111-11",  new ArrayList<Point>(),0));
+            courseList.add(new Course(1, "상도동일대", 2, "상도태권도",
+                    "01022222222", "서울특별시 동작구 상도동 112-32",  new ArrayList<Point>(),0));
+            courseList.add(new Course(1, "동작아파트단지", 3, "동작수학학원",
+                    "01011111111", "서울특별시 동작구 상도동 111-11" ,  new ArrayList<Point>(),0));
         }
 
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("username", username);
-        intent.putExtra("course", courseList);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//        intent.putExtra("username", username);
+//        intent.putExtra("course", courseList);
+//        startActivity(intent);
+//        finish();
     }
 
     public void editInfo(JSONObject info){

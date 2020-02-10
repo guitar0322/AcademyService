@@ -59,7 +59,7 @@ public class SignupActivity extends AppCompatActivity {
 
                     SharedPreferences preferences = getSharedPreferences("DeviceToken", MODE_PRIVATE);;
 
-                    contentValues.put("deviceToken", preferences.getString("token", ""));
+                    contentValues.put("token", preferences.getString("token", ""));
                     RequestSignup requestSignup = new RequestSignup(signupURL, contentValues);
                     requestSignup.execute();
                 }
@@ -138,10 +138,21 @@ public class SignupActivity extends AppCompatActivity {
                 intent.putExtra("guide", "등록정보가 없습니다. 학원에 문의 바랍니다.");
                 startActivityForResult(intent, SIGNUP_FAIL_CODE);
             }
+            else if(result.getString("status").equals("DOUBLE")){
+                intent = new Intent(SignupActivity.this, PopupActivity.class);
+                intent.putExtra("guide", "이미 가입된 회원입니다.");
+                startActivityForResult(intent, SIGNUP_FAIL_CODE);
+            }
+            else if(result.getString("status").equals("NOT_REGED_BY_ACA")){
+                intent = new Intent(SignupActivity.this, PopupActivity.class);
+                intent.putExtra("guide", "회원정보 없음. 학원에 문의바랍니다.");
+                startActivityForResult(intent, SIGNUP_FAIL_CODE);
+            }
             else if(result.getString("status").equals("ACCEPT")){
                 intent = new Intent(SignupActivity.this, PopupActivity.class);
                 intent.putExtra("guide", "회원가입 성공. 로그인 하여 주십시오");
                 startActivityForResult(intent, SIGNUP_CODE);
+                finish();
             }
         }
         catch(Exception e){

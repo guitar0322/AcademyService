@@ -14,14 +14,16 @@ public class Academy implements Serializable {
     double driverLongitude;
     Date arriveTime;
     boolean status;
+    int busID;
 
-    public Academy(String name, String phone, int courseID, String courseName, String driverName, String driverPhone, String status){
+    public Academy(String name, String phone, int courseID, String courseName, String driverName, String driverPhone, String status, int busID){
         this.name = name;
         this.phone = phone;
         this.courseID = courseID;
         this.courseName = courseName;
         this.driverName = driverName;
         this.driverPhone = driverPhone;
+        this.busID = busID;
         if(status.equals("Y"))
             this.status = true;
         else

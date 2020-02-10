@@ -86,6 +86,7 @@ public class CourseActivity extends AppCompatActivity {
                 else{
                     data.put("drvNo", UserInfo.instance.id);
                     data.put("acaNo", course.academyID);
+                    data.put("busNo",course.busID);
                     data.put("routeNo", course.id);
                     RequestStudentList requestStudentList = new RequestStudentList(courseURL, data);
                     requestStudentList.execute();
@@ -142,6 +143,7 @@ public class CourseActivity extends AppCompatActivity {
 
     }
     public void parseDriveInfo(String result){
+        Log.d("course_test", "start result : " + result);
         try{
             JSONObject jsonObject = new JSONObject(result);
             JSONArray pathJsonArray = jsonObject.getJSONArray("path");

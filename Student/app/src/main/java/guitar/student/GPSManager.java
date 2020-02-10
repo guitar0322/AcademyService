@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat;
 
 public class GPSManager extends Service implements LocationListener {
     Context context;
-    Location location;
+    Location location;//위치정보저장
     double latitude;
     double longitude;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
@@ -34,20 +34,25 @@ public class GPSManager extends Service implements LocationListener {
             boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isGPSEnabled && !isNetworkEnabled) {
+            if (isGPSEnabled == false && !isNetworkEnabled == false) {
                 Log.d("gpsTest", "gps off");
             } else {
+                //권한을 보유하고 있는지 검사
                 int hasFineLocationPermission = ContextCompat.checkSelfPermission(context,
                         Manifest.permission.ACCESS_FINE_LOCATION);
                 int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(context,
                         Manifest.permission.ACCESS_COARSE_LOCATION);
 
-                if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                        hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
-                } else {
+                //PERMISSION_GRANTED일 경우 권한허용 상태 PERMISSION_DENIED일 경우 거부상태
+                if (hasFineLocationPermission == PackageManager.PERMISSION_DENIED ||
+                        hasCoarseLocationPermission == PackageManager.PERMISSION_DENIED) {
+                    //둘중 하나라도 거부상태일 경우 null을 리턴
                     Log.d("gpsTest", "permission denied");
                     return null;
                 }
+
+
+                //네트워크를 통해 gps정보를 얻고 만약 실패했을때 gps_provider를 통해 정보를 제공받음.
                 if (isNetworkEnabled) {
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                     if (locationManager != null)
@@ -60,6 +65,7 @@ public class GPSManager extends Service implements LocationListener {
                         }
                     }
                 }
+
                 if (isGPSEnabled)
                 {
                     if (location == null)

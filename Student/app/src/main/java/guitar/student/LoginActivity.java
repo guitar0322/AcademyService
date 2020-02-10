@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed(){
         Intent intent = new Intent(this, ChoicePopupActivity.class);
         intent.putExtra("guide", "앱을 종료하시겠습니까?");
-        startActivity(intent);
+        startActivityForResult(intent, APP_QUIT_CODE);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -149,9 +149,10 @@ public class LoginActivity extends AppCompatActivity {
 
         List<AccessibilityServiceInfo> list = accessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.DEFAULT);
 
-        Log.d("service_test", "size : " + list.size());
+        Log.d("service_test", "service_size : " + list.size());
         for(int i = 0; i < list.size(); i++){
             AccessibilityServiceInfo info = list.get(i);
+            Log.d("accessibility_test", "packagename = " + info.getResolveInfo().serviceInfo.packageName);
             if(info.getResolveInfo().serviceInfo.packageName.equals(getApplication().getPackageName())){
                 return true;
             }
@@ -243,6 +244,7 @@ public class LoginActivity extends AppCompatActivity {
         ContentValues loginData = new ContentValues();
         loginData.put("tel", username);
         loginData.put("password", password);
+        loginData.put("token", getSharedPreferences("DeviceToken", MODE_PRIVATE).getString("token", ""));
         RequestLogin requestLogin = new RequestLogin(loginUrl, loginData);
         requestLogin.execute();
     }
@@ -295,7 +297,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("login_test", "login result = " + result);
         try{
             JSONObject jsonObject = new JSONObject(result);
-            if(jsonObject.getString("status").equals("REJECT")){
+            if(jsonObject.getString("status").equals("NOTHING_MATCH_ACCNT")){
                 Log.d("login_test", "REJECT");
                 Intent intent = new Intent(LoginActivity.this, PopupActivity.class);
                 intent.putExtra("guide", "로그인 정보가 일치하지 않습니다");
@@ -307,18 +309,21 @@ public class LoginActivity extends AppCompatActivity {
                 editInfo(jsonObject.getJSONObject("stdntInfo"));
                 for (int i = 0; i < academyJsonArray.length(); i++) {
                     JSONObject academyInfo = academyJsonArray.getJSONObject(i);
-                    JSONObject courseInfo = academyInfo.getJSONObject("courses");
+                    JSONArray courseJsonArray = academyInfo.getJSONArray("courses");
                     academyList = new ArrayList<>();
-                    academyList.add(new Academy(academyInfo.getString("name"), academyInfo.getString("phone"),
-                            courseInfo.getInt("routeNo"), courseInfo.getString("name"), courseInfo.getString("driver"), courseInfo.getString("phone"), courseInfo.getString("status")));
-                    Log.d("json_test", "academy name = " + academyInfo.getString("name"));
+                    for(int j = 0; j < courseJsonArray.length(); j++){
+                        JSONObject courseInfo = courseJsonArray.getJSONObject(j);
+                        academyList.add(new Academy(academyInfo.getString("acaName"), academyInfo.getString("acaTel"),
+                                courseInfo.getInt("routeNo"), courseInfo.getString("routeName"),
+                                courseInfo.getString("driver"), courseInfo.getString("phone"), courseInfo.getString("status"), courseInfo.getInt("busNo")));
+                    }
                 }
             }
         }
         catch(JSONException e){
             academyList = new ArrayList<>();
-            academyList.add(new Academy("수학학원", "01044444444", 1,"동작아파트 월화", "이기사", "01011111111", "Y"));
-            academyList.add(new Academy("영어학원", "01055555555", 2,"동작초등학교 수목" ,"김기사", "01022222222", "N"));
+            academyList.add(new Academy("수학학원", "01044444444", 1,"동작아파트 월화", "이기사", "01011111111", "Y", 1));
+            academyList.add(new Academy("영어학원", "01055555555", 2,"동작초등학교 수목" ,"김기사", "01022222222", "N", 1));
             e.printStackTrace();
         }
 
@@ -333,6 +338,8 @@ public class LoginActivity extends AppCompatActivity {
             UserInfo.instance.name = info.getString("name");
             UserInfo.instance.id = info.getInt("stdntNo");
             UserInfo.instance.phone = info.getString("tel");
+            editor.putInt("id", info.getInt("stdntNo"));
+            editor.commit();
         }
         catch(Exception e){
             Log.e("login_error", "throw exception while edit userinfo.");

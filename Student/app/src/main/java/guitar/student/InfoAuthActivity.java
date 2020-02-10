@@ -38,7 +38,7 @@ public class InfoAuthActivity extends AppCompatActivity {
             public void onClick(View view){
                 password = passwordEdit.getText().toString();
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("username", username);
+                contentValues.put("tel", username);
                 contentValues.put("password", password);
                 RequestInfoAuth requestInfoAuth = new RequestInfoAuth(authUrl, contentValues);
                 requestInfoAuth.execute();

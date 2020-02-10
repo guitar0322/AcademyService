@@ -29,33 +29,13 @@ public class ChoicePopupActivity extends Activity {
 
         Intent intent = getIntent();
         String data = intent.getStringExtra("guide");
-        REQUESTCODE = intent.getIntExtra("code", 0);
         guideText.setText(data);
 
         okButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent;
-                switch (REQUESTCODE){
-                    case APP_QUIT_CODE:
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        break;
-                    case QUIT_DRIVE:
-                        intent = new Intent(ChoicePopupActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        break;
-                    case LOGOUT:
-                        SharedPreferences preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);;
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("username", "");
-                        editor.putString("password","");
-                        editor.commit();
-                        finishAffinity();
-                        intent = new Intent(ChoicePopupActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        break;
-
-                }
+                setResult(RESULT_OK);
+                finish();
             }
         });
 

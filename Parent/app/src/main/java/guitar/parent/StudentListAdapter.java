@@ -30,7 +30,10 @@ public class StudentListAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return studentList.size();
+        if(studentList != null)
+            return studentList.size();
+        else
+            return 0;
     }
 
     @Override
@@ -63,10 +66,10 @@ public class StudentListAdapter extends BaseAdapter {
         final Switch blockSwitch = view.findViewById(R.id.blockSwitch);
 
         blockSwitch.setChecked(studentList.get(position).block);
-
         blockSwitch.setOnClickListener(new Switch.OnClickListener(){
             @Override
             public void onClick(View view) {
+                blockSwitch.toggle();
                 activity.requestBlock(position, blockSwitch);
             }
         });

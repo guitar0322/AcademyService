@@ -9,31 +9,30 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 public class MyAccessibilityService extends AccessibilityService {
     private static final String TAG = "AccessimilityService";
-    String loginUrl;
+    String blockURL;
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         boolean denyApp = false;
         if(event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            if("com.android.settings".equals(event.getPackageName())){
-                if(event.getText().get(0).equals("AcademyService")){
-                    denyApp = true;
-//                    gotoHome();
-                }
-            }
+//            if("com.android.settings".equals(event.getPackageName())){
+//                if(event.getText().get(0).equals("AcademyService")){
+//                    denyApp = true;
+////                    gotoHome();
+//                }
+//            }
 
             if( "guitar.parent".equals(event.getPackageName())) {
                 denyApp = true;
-//                loginUrl = getString(R.string.url) + "driver/login?";
-//                ContentValues contentValues = new ContentValues();
-//                contentValues.put("username", "aass");
-//                contentValues.put("password", "ass");
-//                RequestLoginTask requestLoginTask = new RequestLoginTask(loginUrl, contentValues);
-//                requestLoginTask.execute();
-                Toast.makeText(this.getApplicationContext(), event.getPackageName() + "앱이 거부되었습니다", Toast.LENGTH_LONG);
-//                gotoHome();
+                blockURL = getString(R.string.url) + "stdnt/block?";
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("stdntNo", getSharedPreferences("AutoLogin", MODE_PRIVATE).getInt("id", 0));
+                RequestBlockTask requestBlockTask = new RequestBlockTask(blockURL, contentValues);
+                requestBlockTask.execute();
             }
 
             if(denyApp == true){
@@ -51,11 +50,11 @@ public class MyAccessibilityService extends AccessibilityService {
         }
     }
 
-    public class RequestLoginTask extends AsyncTask {
+    public class RequestBlockTask extends AsyncTask {
         private String url;
         private ContentValues values;
 
-        public RequestLoginTask(String url, ContentValues values){
+        public RequestBlockTask(String url, ContentValues values){
             this.url = url;
             this.values = values;
         }
@@ -77,21 +76,37 @@ public class MyAccessibilityService extends AccessibilityService {
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             Log.d(TAG, o.toString());
-
-            //Todo after httpNetworking.
+            parseResult(o.toString());
+           //Todo after httpNetworking.
             //ex)Intent, terminate progress, courselist setting
         }
     }
 
-    public void onServiceConnected(){
-        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
-
-        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK; // 전체 이벤트 가져오기
-        info.feedbackType = AccessibilityServiceInfo.DEFAULT | AccessibilityServiceInfo.FEEDBACK_HAPTIC;
-        info.notificationTimeout = 100; // millisecond
-
-        setServiceInfo(info);
+    public void parseResult(String result){
+        Log.d("access_test", "access result = " + result);
+        JSONObject jsonResult;
+        try{
+            jsonResult = new JSONObject(result);
+            if(jsonResult.getString("status").equals("Y")){
+                Toast.makeText(this, "앱이 거부되었습니다", Toast.LENGTH_SHORT).show();
+                gotoHome();
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "앱이 거부되었습니다", Toast.LENGTH_SHORT).show();
+        }
     }
+
+//    public void onServiceConnected(){
+//        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
+//
+//        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK; // 전체 이벤트 가져오기
+//        info.feedbackType = AccessibilityServiceInfo.DEFAULT | AccessibilityServiceInfo.FEEDBACK_HAPTIC;
+//        info.notificationTimeout = 100; // millisecond
+//
+//        setServiceInfo(info);
+//    }
 
     @Override
     public void onInterrupt() {
