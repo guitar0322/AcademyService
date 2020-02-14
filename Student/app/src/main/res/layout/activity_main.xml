@@ -17,8 +17,9 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="43dp">
+                android:layout_height="0dp">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -28,9 +29,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|left"
+                        android:layout_gravity="center|start"
                         android:text="학원목록"
-                        android:textSize="24dp">
+                        android:textSize="24sp">
 
                     </TextView>
 
@@ -38,9 +39,10 @@
             </RelativeLayout>
 
             <ListView
+                android:layout_weight="12"
                 android:id="@+id/academyList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:dividerHeight="2dp">

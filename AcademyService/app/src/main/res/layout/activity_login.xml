@@ -19,31 +19,32 @@
             tools:layout_editor_absoluteY="16dp">
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/logo"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="100dp"
+                android:src="@drawable/logo">
 
             </ImageView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="아이디"
-                android:layout_marginTop="24dp"
                 android:layout_marginStart="48dp">
 
             </TextView>
 
             <EditText
                 android:id="@+id/username"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="48dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="48dp"
                 android:background="@drawable/login_editor"
                 android:hint="연락처11자리"
                 android:padding="12dp"
@@ -53,7 +54,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="비밀번호"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="48dp">
@@ -61,11 +62,11 @@
 
             <EditText
                 android:id="@+id/password"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="48dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="48dp"
                 android:padding="12dp"
                 android:layout_gravity="center"
                 android:hint="비밀번호 8 ~ 16자리"
@@ -89,15 +90,15 @@
 
             <Button
                 android:id="@+id/login"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="48dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="48dp"
                 android:background="@drawable/login_button"
                 android:text="@string/action_login"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 app:layout_constraintVertical_bias="0.2" />
 
@@ -118,31 +119,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/signup"
-            android:layout_width="66dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/transparent"
-            android:layout_marginStart="8dp"
-            android:text="@string/action_signup" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="|">
-        </TextView>
-
-        <Button
-            android:id="@+id/findID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:background="@color/transparent"
-            android:text="아이디 찾기" />
+            android:text="회원가입" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -152,10 +138,11 @@
 
         <Button
             android:id="@+id/findPW"
-            android:layout_width="103dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/transparent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:text="비밀번호 찾기" />
         <TextView
             android:layout_width="wrap_content"
@@ -166,9 +153,9 @@
 
         <Button
             android:id="@+id/privacy"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:paddingStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/transparent"
             android:text="개인정보 처리방침" />
     </LinearLayout>

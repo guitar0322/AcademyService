@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -124,8 +125,11 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onClick(View v) {
                 Log.d("draw_test", "flag = " + toggle);
+                Display display = getWindowManager().getDefaultDisplay();
+                android.graphics.Point size = new android.graphics.Point();
+                display.getSize(size);
                 if (toggle == false) {
-                    ObjectAnimator anim = ObjectAnimator.ofFloat(listFrame, "translationY", -1100f);
+                    ObjectAnimator anim = ObjectAnimator.ofFloat(listFrame, "translationY", -size.y*0.57f);
                     anim.setDuration(500);
                     anim.start();
                 } else {
@@ -159,7 +163,6 @@ public class DriveActivity extends AppCompatActivity implements OnMapReadyCallba
 //                        Toast.makeText(DriveActivity.this, gpsManager.getLatitude() + "," + gpsManager.getLongitude(), Toast.LENGTH_SHORT).show();순서에 따라
                     }
                 });
-
             }
         };
         poolGPSLocationTimer = new Timer();

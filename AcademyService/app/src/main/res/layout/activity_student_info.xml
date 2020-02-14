@@ -8,24 +8,26 @@
 
     <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="3"
         android:id="@+id/title"
         android:orientation="horizontal"
         android:background="@drawable/student_info_title"
         android:layout_width="match_parent"
-        android:layout_height="53dp">
+        android:layout_height="0dp">
         <TextView
             android:id="@+id/studentName"
-            android:textSize="20dp"
-            android:layout_marginLeft="24dp"
+            android:textSize="20sp"
+            android:layout_marginStart="24dp"
             android:textColor="#000"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="김진짜"/>
+
         <LinearLayout
             android:layout_marginEnd="30dp"
-            android:gravity="right|center"
+            android:gravity="end|center"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
@@ -45,10 +47,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:paddingTop="3dp"
+        android:gravity="start|center_vertical"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingBottom="50dp"
+        app:layout_constraintVertical_weight="15"
         app:layout_constraintTop_toBottomOf="@+id/title">
 
         <LinearLayout
@@ -60,20 +63,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="연락처 : "
                 android:textColor="#000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/studentPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="01021215645"
                 android:textColor="#000"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:linksClickable="true"
                 android:autoLink="phone"/>
 
@@ -88,16 +91,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="부모님 이름 : "
                 android:textColor="#000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/parentName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textColor="#000"
                 android:text="김일이">
 
@@ -115,10 +118,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="부모님 연락처 : "
                 android:textColor="#000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/parentPhone"
@@ -126,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:autoLink="phone"
                 android:textColor="#000"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:text="01023231212">
 
             </TextView>

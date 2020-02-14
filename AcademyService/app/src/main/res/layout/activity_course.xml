@@ -10,7 +10,7 @@
         android:id="@+id/maincontent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/driveStartButton"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -20,40 +20,65 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="43dp">
+                android:layout_height="match_parent"
+                android:layout_weight="11">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/courseName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textSize="20dp">
+                        <Button
+                            android:id="@+id/backButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"
+                            android:layout_gravity="start|center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/back_icon">
 
-                    </TextView>
+                        </Button>
 
-                    <Button
-                        android:id="@+id/backButton"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="left|center_vertical"
-                        android:background="@drawable/back_icon">
+                        <TextView
+                            android:id="@+id/courseName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="운행이름"
+                            android:autoSizeTextType="uniform"
+                            android:autoSizeMaxTextSize="25dp">
 
-                    </Button>
+                        </TextView>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp">
+
+                        </View>
+
+                    </LinearLayout>
+
+
 
                 </androidx.appcompat.widget.Toolbar>
             </RelativeLayout>
 
             <ExpandableListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/pointList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp">
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1">
 
             </ExpandableListView>
 
@@ -70,17 +95,27 @@
 
     </FrameLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        app:layout_constraintGuide_percent="0.9"
+        android:orientation="horizontal"
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </androidx.constraintlayout.widget.Guideline>
     <Button
+        android:layout_marginTop="12dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:id="@+id/driveStartButton"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="0dp"
         android:text="운행시작"
         android:textSize="20dp"
         android:background="@drawable/login_button"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline">
 
     </Button>
 </androidx.constraintlayout.widget.ConstraintLayout>

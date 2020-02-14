@@ -7,7 +7,7 @@
     android:paddingBottom="8.5dp">
 
     <TextView
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,7 +20,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:id="@+id/acaName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -28,7 +28,7 @@
         </TextView>
 
         <TextView
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:layout_marginStart="8dp"
             android:id="@+id/acaPhone"
             android:layout_width="wrap_content"

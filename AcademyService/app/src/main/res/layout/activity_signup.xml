@@ -30,14 +30,6 @@
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true" />
 
-        <Button
-            android:id="@+id/double_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/double_check"
-            app:layout_constraintVertical_bias="0.2" />
-
     </LinearLayout>
 
 
