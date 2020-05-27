@@ -1,79 +1,34 @@
 {
   "project_info": {
-    "project_number": "476921355903",
-    "firebase_url": "https://academyservice-cef8c.firebaseio.com",
-    "project_id": "academyservice-cef8c",
-    "storage_bucket": "academyservice-cef8c.appspot.com"
+    "project_number": "8166781325",
+    "firebase_url": "https://academyservice-268906.firebaseio.com",
+    "project_id": "academyservice-268906",
+    "storage_bucket": "academyservice-268906.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:476921355903:android:b3f62a5cd123774414294a",
+        "mobilesdk_app_id": "1:8166781325:android:43d3917a3695afbe248dc4",
         "android_client_info": {
-          "package_name": "guitar.academyservice"
+          "package_name": "com.gongamhada.parent"
         }
       },
       "oauth_client": [
         {
-          "client_id": "476921355903-l9vvf16k0i8i81gib1nlm5g2j9kjtvll.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "guitar.academyservice",
-            "certificate_hash": "37d1c28ea6c7ad16f10277d7d911b85fa1539799"
-          }
-        },
-        {
-          "client_id": "476921355903-lchakchudg44dg4d68pgcat1dgopdouh.apps.googleusercontent.com",
+          "client_id": "8166781325-4v6q9k6ovdtbhgo9fq70r0jk5h8qkbjh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDNzhMt-FAB9FHkyKO1AKL4tQlKXPeKlsU"
+          "current_key": "AIzaSyCRLc5z8xHnPHfTDVOMxLQz9gb0emVwTQU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "476921355903-lchakchudg44dg4d68pgcat1dgopdouh.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:476921355903:android:9117fa0d9bcd344414294a",
-        "android_client_info": {
-          "package_name": "guitar.parent"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "476921355903-nv878c46cpg3mse2d2ed13ohnqv833f6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "guitar.parent",
-            "certificate_hash": "37d1c28ea6c7ad16f10277d7d911b85fa1539799"
-          }
-        },
-        {
-          "client_id": "476921355903-lchakchudg44dg4d68pgcat1dgopdouh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDNzhMt-FAB9FHkyKO1AKL4tQlKXPeKlsU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "476921355903-lchakchudg44dg4d68pgcat1dgopdouh.apps.googleusercontent.com",
+              "client_id": "8166781325-4v6q9k6ovdtbhgo9fq70r0jk5h8qkbjh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

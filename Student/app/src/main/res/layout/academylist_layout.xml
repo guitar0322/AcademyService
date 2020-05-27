@@ -1,55 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center|start"
-    android:paddingTop="8.5dp"
-    android:paddingBottom="5dp">
-
-    <TextView
-        android:id="@+id/academyName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="학원이름"
-        android:layout_marginBottom="5dp">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/courseName"
-        android:layout_marginBottom="5dp"
-        android:text="운행이름"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </TextView>
+    android:orientation="horizontal" android:layout_width="344dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/on"
+    android:paddingStart="35dp"
+    android:paddingEnd="4dp"
+    android:paddingBottom="37dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/driverName"
-            android:layout_marginBottom="5dp"
-            android:text="기사이름"
-            android:textSize="15sp"
+            android:id="@+id/academyName"
+            android:layout_marginTop="25dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="29dp"
+            android:fontFamily="@font/regular"
+            android:text="학원이름"
+            android:textColor="@color/black"
+            android:textSize="20dp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/courseName"
+            android:layout_marginTop="10dp"
+            android:text="운행이름"
+            android:fontFamily="@font/regular"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp">
 
         </TextView>
 
         <TextView
             android:id="@+id/driverPhone"
+            android:text="기사님 : 기사님 연락처"
+            android:fontFamily="@font/regular"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="36dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="기사연락처"
-            android:textSize="15sp">
+            android:layout_height="20dp">
 
         </TextView>
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/driveStatus"
+        android:text="운행중"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        android:gravity="center"
+        android:fontFamily="@font/regular"
+        android:layout_marginTop="117dp"
+        android:layout_marginBottom="3dp"
+        android:layout_width="52dp"
+        android:layout_height="21dp">
+
+    </TextView>
+
 
 </LinearLayout>

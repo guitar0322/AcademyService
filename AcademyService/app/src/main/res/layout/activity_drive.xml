@@ -5,46 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DriveActivity">
+    tools:context="com.gongamhada.driver.DriveActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        app:layout_constraintVertical_weight="1"
         app:layout_constraintBottom_toTopOf="@id/googleMap"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="11dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/left">
 
-            <TextView
-                android:layout_marginStart="8dp"
-                android:id="@+id/courseName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="start|center"
-                android:gravity="start|center"
-                android:text="운행이름"
-                android:layout_weight="1"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="20dp">
+        </Button>
 
-            </TextView>
+        <TextView
+            android:id="@+id/courseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="운행이름"
+            android:textSize="18dp"
+            android:textColor="@color/black2"
+            android:fontFamily="@font/regular">
 
-            <Button
-                android:id="@+id/backButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="7"
-                android:background="@drawable/back_icon">
-
-            </Button>
-
-        </LinearLayout>
+        </TextView>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -53,6 +43,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintVertical_weight="10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:context=".MapsActivity" />
@@ -80,7 +71,7 @@
         android:id="@+id/list_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/list_frame"
+        android:background="@drawable/route"
         android:orientation="vertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -88,16 +79,17 @@
         app:layout_constraintBottom_toBottomOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/guideline">
 
-        <Button
+        <ImageButton
             android:id="@+id/drawer"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="35dp"
+            android:layout_height="15dp"
             android:layout_gravity="center"
-            android:layout_marginTop="12dp"
-            android:layout_weight="25"
-            android:background="@drawable/drawer">
+            android:layout_marginTop="13dp"
+            android:paddingTop="9dp"
+            android:src="@color/line_yellow"
+            android:background="@color/transparent">
 
-        </Button>
+        </ImageButton>
 
         <FrameLayout
             android:id="@+id/container"
@@ -105,9 +97,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_weight="1">
+            android:layout_marginEnd="12dp">
 
         </FrameLayout>
     </LinearLayout>

@@ -5,10 +5,10 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "guitar.student"
+        applicationId "com.gongamhada.student"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 1
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

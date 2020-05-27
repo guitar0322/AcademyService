@@ -2,17 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <TextView
-        android:layout_marginTop="8.5dp"
-        android:layout_marginBottom="8.5dp"
-        android:textSize="15sp"
+        android:layout_marginTop="8.8dp"
+        android:layout_marginBottom="2dp"
+        android:text="학생이름"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        android:fontFamily="@font/regular"
         android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp">
+        android:layout_height="20dp">
+
     </TextView>
+
+    <View
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="2dp">
+
+    </View>
 
 </LinearLayout>

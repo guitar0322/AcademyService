@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="105dp"
+    android:background="@drawable/move_box">
+
+    <View
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+    </View>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="7"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/academyName"
+            android:layout_marginTop="18dp"
+            android:text="학원이름"
+            android:fontFamily="@font/regular"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/academyPhone"
+            android:text="학원 : 학원 연락처"
+            android:fontFamily="@font/regular"
+            android:textSize="12dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/driverPhone"
+            android:text="기사님 : 기사님 연락처"
+            android:fontFamily="@font/regular"
+            android:textSize="12dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp">
+
+        </TextView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

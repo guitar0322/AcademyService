@@ -10,29 +10,31 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toTopOf="@id/googleMap"
         app:layout_constraintTop_toTopOf="parent">
 
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="10.5dp"
+            android:layout_height="20dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/left">
+
+        </Button>
+
         <TextView
-            android:id="@+id/studentName"
-            android:layout_marginStart="8dp"
+            android:id="@+id/academyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:textSize="20sp">
+            android:layout_gravity="center"
+            android:fontFamily="@font/regular"
+            android:text="학원이름"
+            android:textSize="18dp">
 
         </TextView>
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_marginEnd="8dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end|center_vertical"
-            android:background="@drawable/back_icon">
-
-        </Button>
     </androidx.appcompat.widget.Toolbar>
 
     <fragment
@@ -46,14 +48,87 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:context=".MapsActivity" />
 
-    <Button
-        android:id="@+id/refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="새로고침"
-        app:layout_constraintBottom_toBottomOf="@+id/googleMap"
-        app:layout_constraintEnd_toEndOf="@+id/googleMap">
+    <LinearLayout
+        android:id="@+id/driveInfo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.94"
+        android:orientation="vertical"
+        android:background="@drawable/bus_info"
+        android:layout_width="220dp"
+        android:layout_height="100dp">
 
-    </Button>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
 
+            <TextView
+                android:id="@+id/driverName"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="기사이름 기사님"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:fontFamily="@font/regular" />
+
+            <LinearLayout
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/driveInfoClose"
+                    android:background="@color/transparent"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp">
+
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/arriveTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:fontFamily="@font/regular"
+                android:text="16"
+                android:textColor="@color/font_red"
+                android:textSize="24dp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/regular"
+                android:text="분 후 도착 예정"
+                android:gravity="bottom"
+                android:paddingBottom="4dp"
+                android:textColor="@color/black"
+                android:textSize="14dp">
+
+            </TextView>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/phoneButton"
+            android:background="@color/transparent"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+        </Button>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

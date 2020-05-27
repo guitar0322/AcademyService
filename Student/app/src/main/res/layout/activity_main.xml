@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="17.5dp"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <FrameLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="132.5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,36 +35,27 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|start"
-                        android:text="학원목록"
-                        android:textSize="24sp">
-
-                    </TextView>
-
-                </androidx.appcompat.widget.Toolbar>
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/name"
+                android:layout_marginStart="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용자이름님"
+                android:textColor="@color/black"
+                android:fontFamily="@font/regular"
+                android:textSize="24dp" />
 
             <ListView
-                android:layout_weight="12"
                 android:id="@+id/academyList"
-                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_gravity="center"
+                android:layout_width="344dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:dividerHeight="2dp">
+                android:layout_marginTop="6dp"
+                android:layout_weight="12"
+                android:divider="@color/transparent"
+                android:dividerHeight="3dp"
+                tools:listitem="@layout/academylist_layout">
 
             </ListView>
 
@@ -60,4 +70,4 @@
 
     </FrameLayout>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

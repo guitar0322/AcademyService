@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
-        <item
-            android:id="@+id/account"
-            android:icon="@drawable/ic_launcher_foreground"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="정보변경"
-            />
-        <item
-            android:id="@+id/logout"
-            android:icon="@drawable/ic_launcher_foreground"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="로그아웃"
-            />
-    </group>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        app:showAsAction="always"
+        android:id="@+id/menu"
+        android:icon="@drawable/menu_box"
+        android:title="정보변경">
+
+        <menu>
+            <item
+                android:id="@+id/account"
+                android:title="비밀번호변경">
+
+            </item>
+
+            <item
+                android:id="@+id/logout"
+                android:title="로그아웃">
+
+            </item>
+
+        </menu>
+    </item>
+
+
+<!--    <item-->
+<!--        android:id="@+id/logout"-->
+<!--        android:icon="@drawable/ic_launcher_foreground"-->
+<!--        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"-->
+<!--        android:title="로그아웃"-->
+<!--        />-->
 </menu>

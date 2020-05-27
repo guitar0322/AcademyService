@@ -9,157 +9,200 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_width="230dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp">
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="100dp"
-                android:paddingEnd="100dp"
-                android:src="@drawable/logo"
-                android:layout_gravity="center">
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:src="@drawable/logo">
 
             </ImageView>
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="아이디"
-                android:layout_marginTop="24dp"
-                android:layout_marginStart="48dp">
+                android:layout_marginTop="50dp"
+                android:layout_width="37dp"
+                android:layout_height="15dp"
+                android:text="휴대전화"
+                android:textColor="@color/black2"
+                android:textSize="10dp"
+                android:fontFamily="@font/regular">
 
             </TextView>
-
             <EditText
                 android:id="@+id/username"
-                android:layout_width="320dp"
-                android:layout_height="52dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/login_editor"
-                android:hint="연락처11자리"
-                android:padding="12dp"
-                android:selectAllOnFocus="true" />
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:fontFamily="@font/light"
+                android:background="@color/transparent"
+                android:hint="-없이숫자만"
+                android:textColorHint="@color/font_gray2"
+                android:inputType="phone"
+                android:selectAllOnFocus="true"
+                android:textSize="16dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/line_yellow">
+
+            </View>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_marginTop="17dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:text="비밀번호"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="48dp">
+                android:textColor="@color/black2"
+                android:textSize="10dp"
+                android:fontFamily="@font/regular">
+
             </TextView>
 
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="320dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:padding="12dp"
-                android:layout_gravity="center"
-                android:hint="비밀번호 8 ~ 16자리"
-                android:background="@drawable/login_editor"
-                android:imeActionLabel="@string/action_signup"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:selectAllOnFocus="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:fontFamily="@font/light"
+                    android:background="@color/transparent"
+                    android:hint="8자리이상"
+                    android:textColorHint="@color/font_gray2"
+                    android:imeActionLabel="@string/action_signup"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:selectAllOnFocus="true"
+                    android:textSize="16dp">
 
-            </EditText>
+                </EditText>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="end|center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/eye"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:background="@drawable/eye_icon">
+
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/line_yellow">
+
+            </View>
 
             <CheckBox
                 android:id="@+id/autoLogin"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="자동로그인"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="48dp">
+                android:layout_height="20dp"
+                android:layout_marginTop="27dp"
+                android:fontFamily="@font/regular"
+                android:drawableLeft="@drawable/checkbox"
+                android:button="@null"
+                android:textSize="13dp"
+                android:textColor="@color/black2"
+                android:text="로그인 상태 유지">
 
             </CheckBox>
 
             <Button
                 android:id="@+id/login"
-                android:layout_width="320dp"
-                android:layout_height="52dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/login_button"
-                android:text="@string/action_login"
-                android:textSize="30sp"
+                android:text="로그인"
+                android:textSize="32dp"
                 android:textColor="@color/white"
+                android:gravity="center"
+                android:paddingBottom="7dp"
+                android:paddingEnd="7dp"
+                android:fontFamily="@font/regular"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="31dp"
+                android:background="@drawable/login_button"
                 app:layout_constraintVertical_bias="0.2" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="35dp"
+                android:background="@color/line_gray">
+
+            </View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal"
+                android:paddingStart="5dp">
+
+                <Button
+                    android:background="@color/transparent"
+                    android:id="@+id/signup"
+                    android:layout_weight="48"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/regular"
+                    android:text="회원가입"
+                    android:textColor="@color/black2"
+                    android:textSize="13dp">
+
+
+                </Button>
+
+                <LinearLayout
+                    android:gravity="end"
+                    android:layout_weight="174"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/findButton"
+                        android:background="@color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/regular"
+                        android:text="비밀번호를 잊으셨나요?"
+                        android:textColor="@color/black2"
+                        android:textSize="10dp">
+
+                    </Button>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
 
         <ProgressBar
+            android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/loading"
-            android:visibility="gone"
-            android:layout_gravity="center_vertical|center_horizontal">
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:visibility="gone">
 
         </ProgressBar>
 
     </FrameLayout>
 
-    <LinearLayout
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/signup"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/transparent"
-            android:text="@string/action_signup" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="|">
-        </TextView>
-
-        <Button
-            android:id="@+id/findPW"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/transparent"
-            android:text="비밀번호 찾기" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="|">
-        </TextView>
-
-        <Button
-            android:id="@+id/privacy"
-            android:paddingStart="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/transparent"
-            android:text="개인정보 처리방침" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

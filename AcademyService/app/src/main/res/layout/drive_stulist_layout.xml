@@ -2,30 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:checkable="true"
-    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/name"
-        android:clickable="true"
-        android:gravity="start|center"
-        android:layout_gravity="start">
-
-    </TextView>
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="end|center">
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkbox">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        </androidx.appcompat.widget.AppCompatCheckBox>
+        <TextView
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:id="@+id/name"
+            android:text="학생이름"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/regular"
+            android:clickable="true">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="15dp"
+                android:scaleY="1.5"
+                android:scaleX="1.5"
+                android:background="@drawable/board_checkbox"
+                android:button="@null"
+                android:id="@+id/checkbox">
+
+            </androidx.appcompat.widget.AppCompatCheckBox>
+        </LinearLayout>
+
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_gray">
+
+    </View>
+
 </LinearLayout>

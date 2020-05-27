@@ -1,38 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/on"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="8.5dp"
-    android:paddingBottom="8.5dp">
+    android:layout_width="344dp"
+    android:layout_height="wrap_content"
+    android:paddingStart="35dp"
+    android:paddingBottom="36dp">
 
     <TextView
-        android:textSize="20sp"
+        android:text="운행이름"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:fontFamily="@font/regular"
         android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="29dp">
     </TextView>
 
     <LinearLayout
-        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:orientation="horizontal">
 
         <TextView
-            android:textSize="15sp"
+            android:text="학원이름"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:fontFamily="@font/regular"
             android:id="@+id/acaName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
         </TextView>
 
         <TextView
-            android:textSize="15sp"
-            android:layout_marginStart="8dp"
+            android:text="학원 연락처"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/regular"
+            android:layout_marginStart="4dp"
             android:id="@+id/acaPhone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
         </TextView>
     </LinearLayout>

@@ -2,135 +2,113 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/student_popup_frame"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content">
+    android:background="@drawable/stu_info"
+    android:padding="14dp"
+    android:layout_width="250dp"
+    android:layout_height="145dp">
 
     <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="3"
-        android:id="@+id/title"
-        android:orientation="horizontal"
-        android:background="@drawable/student_info_title"
+        android:gravity="end"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <TextView
-            android:id="@+id/studentName"
-            android:textSize="20sp"
-            android:layout_marginStart="24dp"
-            android:textColor="#000"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="김진짜"/>
+        android:layout_height="30dp">
+
+        <Button
+            android:id="@+id/stuInfoCloseButton"
+            android:background="@color/transparent"
+            android:layout_marginEnd="7dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp">
+
+        </Button>
+
+    </LinearLayout>
+
+    <TextView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/studentName"
+        android:text="학생이름"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/regular"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp">
+
+    </TextView>
+
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_marginEnd="30dp"
-            android:gravity="end|center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="30dp">
             <Button
-                android:id="@+id/locationButton"
-                android:background="@drawable/location_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp">
+                android:id="@+id/studentPhone"
+                android:background="@color/transparent"
+                android:layout_marginStart="50dp"
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </Button>
+            <Button
+                android:id="@+id/studentLocation"
+                android:background="@color/transparent"
+                android:layout_marginStart="17dp"
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </Button>
+            <Button
+                android:id="@+id/parentPhone"
+                android:background="@color/transparent"
+                android:layout_marginStart="12dp"
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
 
             </Button>
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/body"
-        android:background="@drawable/student_info_frame"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="start|center_vertical"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="50dp"
-        app:layout_constraintVertical_weight="15"
-        app:layout_constraintTop_toBottomOf="@+id/title">
-
         <LinearLayout
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha="0.87"
-                android:gravity="start"
-                android:text="연락처 : "
-                android:textColor="#000"
-                android:textSize="15sp" />
+            android:layout_width="match_parent"
+            android:layout_height="15dp">
 
             <TextView
-                android:id="@+id/studentPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha="0.87"
-                android:gravity="start"
-                android:text="01021215645"
-                android:textColor="#000"
-                android:textSize="15sp"
-                android:linksClickable="true"
-                android:autoLink="phone"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha="0.87"
-                android:gravity="start"
-                android:text="부모님 이름 : "
-                android:textColor="#000"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/parentName"
+                android:text="학생연락처"
+                android:textSize="10dp"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/black"
+                android:layout_marginStart="42dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="#000"
-                android:text="김일이">
+                android:layout_height="match_parent">
 
             </TextView>
 
-        </LinearLayout>
+            <TextView
+                android:text="학생위치"
+                android:textSize="10dp"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/black"
+                android:layout_marginStart="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
 
-        <LinearLayout
-            android:padding="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            </TextView>
 
             <TextView
+                android:text="보호자"
+                android:textSize="10dp"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.87"
-                android:gravity="start"
-                android:text="부모님 연락처 : "
-                android:textColor="#000"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/parentPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autoLink="phone"
-                android:textColor="#000"
-                android:textSize="15sp"
-                android:text="01023231212">
+                android:layout_height="match_parent">
 
             </TextView>
 

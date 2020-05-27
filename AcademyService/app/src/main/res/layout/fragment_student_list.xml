@@ -8,43 +8,62 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/backButton"
-            android:background="@drawable/back_icon">
+            android:paddingEnd="10dp"
+            android:background="@color/transparent"
+            android:src="@drawable/left2">
 
-        </Button>
+        </ImageButton>
         <TextView
             android:id="@+id/pointName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:text="demo title">
+            android:textSize="13dp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/black"
+            android:text="정류장이름">
 
         </TextView>
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_gray">
+
+    </View>
+
+
     <ListView
         android:id="@+id/studentList"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="5dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         app:layout_constraintBottom_toTopOf="@id/checkButton"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <Button
         android:id="@+id/checkButton"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="12dp"
+        android:layout_width="236dp"
+        android:layout_height="62dp"
+        android:paddingBottom="7dp"
+        android:paddingEnd="6dp"
+        android:layout_marginBottom="68dp"
         android:text="승하차 완료"
-        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:fontFamily="@font/regular"
+        android:background="@drawable/login_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">

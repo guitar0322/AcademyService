@@ -5,81 +5,195 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="120dp"
     tools:context=".InfoEditActivity">
-    <!--    android:paddingLeft="@dimen/activity_horizontal_margin"-->
-    <!--    android:paddingTop="@dimen/activity_vertical_margin"-->
-    <!--    android:paddingRight="@dimen/activity_horizontal_margin"-->
-    <!--    android:paddingBottom="@dimen/activity_vertical_margin"-->
 
-    <EditText
-        android:id="@+id/password"
+    <LinearLayout
+        android:id="@+id/title"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10.5dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:fontFamily="@font/regular"
+            android:layout_gravity="center"
+            android:text="비밀번호 변경"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" />
+    </LinearLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_marginTop="7dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="65dp"
+        android:layout_width="match_parent"
+        android:background="@color/line_gray"
+        android:layout_height="1dp">
+
+    </View>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
-
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_signup"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </EditText>
-
-    <EditText
-        android:id="@+id/password2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
-
-        android:hint="@string/prompt_password2"
-        android:imeActionLabel="@string/action_signup"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
-
-    <Button
-        android:id="@+id/edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="64dp"
-        android:text="@string/action_signup"
+        app:layout_constraintVertical_bias="0.55"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.137" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="230dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/password_icon">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/guide"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:text="OOOO님의 소중한 개인정보를 위해\n비밀번호를 재설정합니다"
+                android:textSize="13dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/regular"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/password"
+                android:background="@color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="32dp"
+                android:hint="비밀번호"
+                android:textColorHint="@color/font_gray2"
+                android:textSize="16dp"
+                android:inputType="textPassword"
+                android:fontFamily="@font/light">
+
+            </EditText>
+
+            <View
+                android:background="@color/line_yellow"
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp">
+
+            </View>
+
+            <TextView
+                android:id="@+id/password1_err"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-영어 + 숫자 조합 8자리 이상 15자 이하"
+                android:textColor="@color/font_red"
+                android:textSize="12dp"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:visibility="invisible">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/password2"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginTop="15dp"
+                android:imeActionLabel="@string/action_signup"
+                android:fontFamily="@font/regular"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:hint="비밀번호 재확인"
+                android:textColorHint="@color/font_gray2"
+                android:textSize="16dp"
+                android:background="@color/transparent"
+                android:selectAllOnFocus="true"/>
+
+            <View
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/line_yellow">
+
+            </View>
+
+            <TextView
+                android:id="@+id/password2_err"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*비밀번호가 일치하지 않습니다."
+                android:textColor="@color/font_red"
+                android:textSize="12dp"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:visibility="invisible">
 
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="64dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+            </TextView>
+
+            <Button
+                android:layout_marginTop="25dp"
+                android:id="@+id/edit"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:text="확인"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:paddingBottom="7dp"
+                android:paddingEnd="6dp"
+                android:background="@drawable/login_button">
+
+            </Button>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_gray"
+                android:layout_marginTop="35dp">
+
+            </View>
+
+            <Button
+                android:background="@color/transparent"
+                android:layout_gravity="end"
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="메인화면 돌아가기"
+                android:textSize="13dp"
+                android:textColor="@color/font_gray2"
+                android:fontFamily="@font/regular"
+                android:gravity="center">
+
+            </Button>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

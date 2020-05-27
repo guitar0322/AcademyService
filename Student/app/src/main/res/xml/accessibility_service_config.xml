@@ -4,5 +4,6 @@
     android:accessibilityEventTypes="typeWindowStateChanged"
     android:accessibilityFeedbackType="feedbackGeneric"
     android:canRetrieveWindowContent="true"
+    android:packageNames="guitar.parentt"
     android:description="@string/accessibility_description"
     android:notificationTimeout="100" />

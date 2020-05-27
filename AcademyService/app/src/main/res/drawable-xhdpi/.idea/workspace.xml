@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="147442ad-2d86-4a1d-8ccb-8cc91291398e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../drawable/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/drivelist_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../google-services.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../androidTest/java/guitar/academyservice/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../androidTest/java/com/gongamhada/driver/ExampleInstrumentedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/AcceptActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/AcceptActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/AuthActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/ChoicePopupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/ChoicePopupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/CourseActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/CourseActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/CourseListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/CourseListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/DriveActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/DriveActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/DriveStulistAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/DriveStulistAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/GPSManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/GPSManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/HttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/InfoAuthActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/InfoAuthActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/InfoEditActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/InfoEditActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/ListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/ListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/MyAccessibilityService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/MyFirebaseInstanceIDService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/MyFirebaseInstanceIDService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/PointListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/PointListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/PointListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/PointListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/PopupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/PopupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/SignupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/SignupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/StudentInfoActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/StudentInfoActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/StudentListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/StudentListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/TMapUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/TMapUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/dummy/DummyContent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/guitar/academyservice/ui/login/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/gongamhada/driver/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/busicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/checkbox_off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/checkbox_on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/devide_line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/drawer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/layout_outline.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/list_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/login_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/../drawable/login_button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/login_editor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/logo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/num1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/num2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/num3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/num4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/num5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/num6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/student_info_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/student_info_title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/student_popup_frame.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_accept.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_accept.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_auth.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_choice_popup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_choice_popup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_course.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_course.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_drive.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_drive.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_info_auth.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_info_auth.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_info_edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_info_edit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_popup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_popup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_signup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_signup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/activity_student_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/activity_student_info.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/courselist_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/courselist_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/drive_stulist_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/drive_stulist_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/fragment_point_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/fragment_point_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/fragment_student_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/fragment_student_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/list_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/list_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/studentlist_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/studentlist_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../menu/main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../menu/main_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xml/accessibility_service_config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../test/java/guitar/academyservice/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../test/java/com/gongamhada/driver/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/google-services.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/androidTest/java/guitar/parent/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/androidTest/java/com/gongamhada/parent/ExampleInstrumentedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/AcceptActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/AcceptActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/AuthActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/AuthActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/ChoicePopupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/ChoicePopupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/DriveActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/DriveActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/DriverInfoAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/HttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/InfoAuthActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/InfoAuthActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/InfoEditActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/InfoEditActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/ListAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/MyFirebaseInstanceIDService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/MyFirebaseInstanceIDService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/PopupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/PopupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/SignupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/SignupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/com/gongamhada/parent/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/java/guitar/parent/StudentListAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/back_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/busicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/checkbox_off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/checkbox_on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/devide_line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/drawer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/list_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/location_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/login_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/login_button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/login_editor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/logo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/menu_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/student_info_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/student_info_title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/student_popup_frame.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/vertical_switch_off.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/vertical_switch_on.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/vertical_switch_thumb.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/drawable/vertical_switch_track.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_accept.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_accept.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_auth.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_auth.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_choice_popup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_choice_popup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_drive.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_drive.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_drive_info.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_info_auth.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_info_auth.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_info_edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_info_edit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_popup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_popup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_signup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/activity_signup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/list_layout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/layout/studentlist_layout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/menu/main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/menu/main_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Parent/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Parent/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/google-services.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/androidTest/java/guitar/student/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/androidTest/java/com/gongamhada/student/ExampleInstrumentedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/Academy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/Academy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/AcademyListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/AcademyListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/AcceptActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/AcceptActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/ChoicePopupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/ChoicePopupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/DriveActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/DriveActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/DriverInfoAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/DriverInfoAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/GPSManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/GPSManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/HttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/InfoAuthActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/InfoAuthActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/InfoEditActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/InfoEditActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/ListAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/MyAccessibilityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/MyAccessibilityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/MyFirebaseInstanceIDService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/MyFirebaseInstanceIDService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/PopupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/PopupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/SignupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/SignupActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/guitar/student/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/java/com/gongamhada/student/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/back_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/busicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/checkbox_off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/checkbox_on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/devide_line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/drawer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/list_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/location_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/login_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/login_button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/login_editor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/logo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/menu_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/drawable/student_popup_frame.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/academylist_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/academylist_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_accept.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_accept.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_choice_popup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_choice_popup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_drive.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_drive.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_drive_info.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_info_auth.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_info_auth.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_info_edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_info_edit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_popup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_popup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_signup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/activity_signup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/layout/list_layout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/menu/main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/menu/main_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/menu/navi_menu.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/xml/accessibility_service_config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/main/res/xml/accessibility_service_config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/app/src/test/java/guitar/student/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/app/src/test/java/com/guitar/student/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../Student/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Student/build.gradle" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../.." />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1912" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="147442ad-2d86-4a1d-8ccb-8cc91291398e" name="Default Changelist" comment="" />
+      <created>1590124760129</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590124760129</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.1548999" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+</project>

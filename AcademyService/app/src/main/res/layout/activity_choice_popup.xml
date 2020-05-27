@@ -1,76 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#eeeeee"
+    android:background="@drawable/popup_yn"
     android:orientation="vertical"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/guideText"
+        android:gravity="center"
+        android:text="비밀번호 변경이 완료되었습니다\n다시 로그인 해주시기 바랍니다"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/regular"
+        android:layout_weight="11"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_weight="2"
-        android:layout_height="0dp">
-        <TextView
-            android:text="Notice"
-            android:textSize="20sp"
-            android:textColor="#fff"
-            android:gravity="center"
-            android:background="#ff7a00"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:padding="24dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_weight="4"
-        android:layout_height="0dp">
-        <TextView
-            android:id="@+id/guideText"
-            android:textSize="15sp"
-            android:textColor="#000"
-            android:alpha="0.87"
-            android:gravity="center"
-            android:text="팝업 안내 메세지입니다"
-            android:layout_marginBottom="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <View
-        android:background="#66bdbdbd"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
-
-    <LinearLayout
-        android:orientation="horizontal"
+        android:layout_weight="6"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_weight="2"
-        android:paddingStart="60dp"
-        android:paddingEnd="60dp"
         android:layout_height="0dp">
         <Button
-            android:id="@+id/closeButton"
-            android:text="취소"
-            android:textSize="15sp"
-            android:textColor="#ff7a00"
-            android:padding="8dp"
+            android:id="@+id/okButton"
+            android:text="확인"
+            android:fontFamily="@font/regular"
+            android:textSize="16dp"
+            android:textColor="@color/black"
             android:gravity="center"
-            android:background="#808080"
+            android:background="@color/transparent"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
         <Button
-            android:id="@+id/okButton"
-            android:text="확인"
-            android:textSize="15sp"
-            android:textColor="#ff7a00"
-            android:padding="8dp"
+            android:id="@+id/closeButton"
+            android:text="취소"
+            android:fontFamily="@font/regular"
+            android:textSize="16dp"
+            android:textColor="@color/black"
             android:gravity="center"
+            android:background="@color/transparent"
             android:layout_weight="1"
-            android:background="@color/design_default_color_primary"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
     </LinearLayout>
